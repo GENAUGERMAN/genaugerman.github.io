@@ -1,0 +1,112 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Genau! — Bürgeramt Survival Script (free PDF)</title>
+<meta name="description" content="The exact German lines to register your address (Anmeldung) without freezing at the desk. 4-line script, what the clerk asks, the words on the form. Free one-page PDF.">
+<meta property="og:title" content="Bürgeramt Survival Script · Genau!">
+<meta property="og:description" content="The 4 German lines that make you legally exist. Free one-page survival PDF.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0E1B33; --paper:#16294a; --ink:#F4F7FF; --muted:#9DB0D0;
+  --accent:#F2C14E; --accentSoft:#23365b; --line:#26406b;
+  --wrong:#E0573C; --right:#7FC08A;
+}
+html,body{overflow-x:clip}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);
+  background:var(--bg);min-height:100vh;position:relative;
+  -webkit-font-smoothing:antialiased;
+}
+/* ambient gold/navy glows — contained so they never cause overflow */
+.bg{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.bg span{position:absolute;border-radius:50%;filter:blur(80px)}
+.bg .g1{width:62vw;height:62vw;top:-26vw;right:-16vw;background:radial-gradient(circle,rgba(242,193,78,.5) 0%,transparent 66%);opacity:.5}
+.bg .g2{width:58vw;height:58vw;bottom:-28vw;left:-18vw;background:radial-gradient(circle,#1C3768 0%,transparent 70%);opacity:.9}
+.wrap{position:relative;z-index:1;max-width:560px;margin:0 auto;padding:38px 22px 56px}
+/* brand */
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:18px;letter-spacing:-.01em}
+.brand .wm{flex:none;white-space:nowrap}
+.brand .bang{color:var(--accent)}
+.brand i{font-style:normal;font-weight:600;color:var(--muted);font-size:14px}
+.brand .live{margin-left:auto;flex:none;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accentSoft);padding:6px 12px;border-radius:999px;border:1px solid var(--line)}
+.brand i{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* hero */
+.hero{margin-top:40px;animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.kick{font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+h1{font-weight:800;font-size:clamp(29px,8vw,44px);line-height:1.06;letter-spacing:-.03em;margin:14px 0 0}
+h1 .u{position:relative;white-space:nowrap;color:var(--accent)}
+h1 .u::after{content:"";position:absolute;left:-2px;right:-2px;bottom:.06em;height:.34em;background:var(--accent);opacity:.22;border-radius:4px;z-index:-1;transform:scaleX(0);transform-origin:left;animation:wipe .7s .5s cubic-bezier(.2,.7,.2,1) forwards}
+.lede{margin-top:18px;font-size:17px;line-height:1.55;color:var(--muted);font-weight:500}
+/* dread→relief script preview */
+.script{margin-top:24px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+  border:1px solid var(--line);border-radius:16px;padding:16px 18px;backdrop-filter:blur(6px)}
+.script .ln{display:flex;gap:11px;align-items:baseline;padding:7px 0;font-size:14.5px}
+.script .ln>span:last-child{min-width:0;overflow-wrap:break-word}
+.script .ln+.ln{border-top:1px dashed var(--line)}
+.script .n{flex:none;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#10203b;font-weight:800;font-size:11px;display:grid;place-items:center}
+.script .de{font-weight:700;color:var(--ink)}
+.script .en{color:var(--muted);font-weight:500;font-size:13px}
+/* offer card */
+.card{margin-top:30px;background:var(--paper);border:1px solid var(--line);border-radius:26px;
+  padding:30px 26px;box-shadow:0 26px 60px -18px rgba(0,0,0,.55);animation:rise .7s .12s both}
+.card .ico{font-size:30px}
+.card h2{font-weight:800;font-size:25px;letter-spacing:-.02em;margin-top:8px}
+.list{list-style:none;margin:18px 0 0;display:grid;gap:11px}
+.list li{display:flex;gap:11px;font-size:15px;font-weight:500;color:var(--ink);line-height:1.4}
+.list li>span:last-child{min-width:0;overflow-wrap:break-word}
+.list li b{color:var(--accent)}
+.check{flex:none;width:22px;height:22px;border-radius:50%;background:var(--accentSoft);color:var(--accent);
+  border:1px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:800;margin-top:1px}
+/* CTA */
+.cta{margin-top:24px;display:block;text-decoration:none;text-align:center;
+  font-weight:800;font-size:17px;color:#10203b;background:var(--accent);
+  padding:17px;border-radius:15px;box-shadow:0 16px 38px -8px rgba(242,193,78,.45);
+  transition:transform .15s ease, box-shadow .15s ease}
+.cta:hover{transform:translateY(-2px);box-shadow:0 22px 46px -8px rgba(242,193,78,.6)}
+.meta{margin-top:11px;text-align:center;font-size:12.5px;color:var(--muted);font-weight:600;letter-spacing:.02em}
+/* footer */
+.foot{margin-top:34px;text-align:center;font-size:13.5px;color:var(--muted);line-height:1.7}
+.foot a{color:var(--accent);font-weight:700;text-decoration:none}
+.foot .soon{display:block;margin-top:8px;font-size:11.5px;opacity:.7}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes wipe{to{transform:scaleX(1)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head>
+<body>
+<div class="bg"><span class="g1"></span><span class="g2"></span></div>
+<div class="wrap">
+
+  <div class="brand"><span class="wm">Genau<span class="bang">!</span></span><i>EN→DE</i><span class="live">free</span></div>
+
+  <section class="hero">
+    <div class="kick">Anmeldung · the Bürgeramt</div>
+    <h1>4 lines and you <span class="u">legally exist</span>.</h1>
+    <p class="lede">No address registration, no bank account, no contract, no life in Germany. Here's the exact script so you don't freeze at the desk.</p>
+    <div class="script">
+      <div class="ln"><span class="n">1</span><span><span class="de">„Ich möchte mich anmelden.“</span><br><span class="en">I'd like to register.</span></span></div>
+      <div class="ln"><span class="n">2</span><span><span class="de">„Hier ist meine Wohnungsgeberbestätigung.“</span><br><span class="en">Here's my landlord confirmation.</span></span></div>
+      <div class="ln"><span class="n">+</span><span class="en">…2 more lines + what the clerk asks back, in the PDF.</span></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="ico">🛂</div>
+    <h2>Bürgeramt Survival Script</h2>
+    <ul class="list">
+      <li><span class="check">✓</span><span>The <b>4-line script</b>, in the exact order you say it</span></li>
+      <li><span class="check">✓</span><span><b>What the clerk asks back</b> — and how to answer</span></li>
+      <li><span class="check">✓</span><span>The <b>words on the form</b>, decoded (Wohnungsgeber…)</span></li>
+      <li><span class="check">✓</span><span>One page · pull it up at the desk · <b>100% free</b></span></li>
+    </ul>
+    <a class="cta" href="buergeramt-survival-script.pdf" download>Download the script →</a>
+    <p class="meta">PDF · one page · no email needed</p>
+  </section>
+
+  <p class="foot">
+    <a href="https://instagram.com/genaugerman" target="_blank" rel="noopener">@genaugerman</a> · real survival German, daily · Follow for daily German 🇩🇪
+    <span class="soon">Coming soon: weekly survival-German tips by email (GDPR / double opt-in).</span>
+  </p>
+
+</div></body></html>
