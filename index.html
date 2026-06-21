@@ -2,21 +2,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0E1B33">
-<title>Genau! — Survive real German, one room at a time</title>
-<meta name="description" content="The German that gets you through the room — Bürgeramt, Bäckerei, U-Bahn, Apotheke. The exact lines for the moments that actually happen. Free Bürgeramt survival script.">
-<meta property="og:title" content="Genau! — Survive the room">
-<meta property="og:description" content="Survive real German, one room at a time. The exact lines for the moments that actually happen.">
+<title>Genau! — Zero to B1 German in 4.5 months</title>
+<meta name="description" content="Private German lessons for English speakers in Germany. Zero to B1 in 4.5 months — 3 courses, 1-on-1 + small group, premium resources and exclusive videos. Free Bürgeramt survival script.">
+<meta property="og:title" content="Genau! — Zero to B1 German in 4.5 months">
+<meta property="og:description" content="Private-lesson quality. 3 courses, 3 clear levels: A1 → A2 → B1. Each course is 1.5 months.">
 <meta property="og:locale" content="en_US"><meta property="og:type" content="website">
 <script>document.documentElement.className+=' js'</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 :root{
   --navy:#0E1B33; --paper:#16294a; --ink:#F4F7FF; --muted:#9DB0D0;
-  --gold:#F2C14E; --gold-deep:#D9A93B; --soft:#23365b; --line:#26406b;
-  --font:"Plus Jakarta Sans",system-ui,sans-serif;
+  --gold:#F2C14E; --gold-deep:#D9A93B; --gold2:#E9D7A0; --soft:#23365b; --line:#26406b;
+  --font:"Plus Jakarta Sans",system-ui,sans-serif; --disp:var(--font); --sans:var(--font);
   --sh:0 18px 40px -22px rgba(0,0,0,.55);
   --sh-lg:0 30px 60px -28px rgba(0,0,0,.65);
   --sh-sm:0 8px 20px -14px rgba(0,0,0,.5);
+  --warm:var(--sh); --warm-lg:var(--sh-lg); --warm-sm:var(--sh-sm);
+  --terracotta:var(--gold); --terracotta-deep:var(--gold-deep); --cream:var(--navy); --peach:var(--soft);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -29,6 +31,8 @@ body{
 .wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 20px}
 @media(min-width:640px){.wrap{padding:0 32px}}
 
+#glow{position:fixed;z-index:1;top:0;left:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;pointer-events:none;opacity:0;mix-blend-mode:soft-light;background:radial-gradient(circle,rgba(242,193,78,.6),transparent 62%);transition:opacity .4s;will-change:transform}
+
 /* ── Nav ── */
 header{position:fixed;inset-inline:0;top:0;z-index:40}
 nav{max-width:1120px;margin:14px auto 0;display:flex;align-items:center;justify-content:space-between;
@@ -38,14 +42,16 @@ nav{max-width:1120px;margin:14px auto 0;display:flex;align-items:center;justify-
 .gbox{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:var(--gold);color:#10203b;font-weight:800;font-size:15px}
 .brandname{font-weight:800;font-size:17px;letter-spacing:-.02em;color:var(--ink)}
 .brandname b{color:var(--gold);font-weight:800}
-.navlinks{display:none;gap:28px}
+.navlinks{display:none;gap:26px}
 @media(min-width:880px){.navlinks{display:flex}}
 .ghost{font-weight:600;font-size:14.5px;color:rgba(244,247,255,.78);text-decoration:none;transition:color .2s}
 .ghost:hover{color:var(--gold)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;
   color:#10203b;background:var(--gold);border:0;border-radius:999px;text-decoration:none;cursor:pointer;
-  box-shadow:var(--sh-sm);transition:transform .2s,background .2s,box-shadow .2s}
+  box-shadow:var(--sh-sm);transition:transform .2s,background .2s,box-shadow .2s;will-change:transform}
 .btn:hover{transform:translateY(-2px);background:var(--gold-deep);box-shadow:0 16px 38px -8px rgba(242,193,78,.5)}
+.btn.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(242,193,78,0),var(--sh-sm)}50%{box-shadow:0 0 0 10px rgba(242,193,78,.14),0 16px 38px -8px rgba(242,193,78,.4)}}
 .nav-cta{padding:10px 18px;font-size:14px}
 
 /* shared */
@@ -54,27 +60,45 @@ section{position:relative}
 .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--soft);border-radius:999px;padding:6px 16px;font-weight:600;font-size:14px;color:var(--ink)}
 h1,h2,h3{font-weight:800;letter-spacing:-.02em}
 .h2{font-size:clamp(2rem,4.5vw,3.1rem);line-height:1.03;letter-spacing:-.025em}
+.uline{position:relative;display:inline-block}
+.uline svg{position:absolute;left:0;right:0;bottom:-.42em;width:100%;height:.5em;overflow:visible}
+.uline svg path{fill:none;stroke:var(--gold);stroke-width:5;stroke-linecap:round;stroke-dasharray:340;stroke-dashoffset:340}
+html.js .uline.drawn svg path{transition:stroke-dashoffset 1s cubic-bezier(.22,1,.36,1);stroke-dashoffset:0}
 .card{border:1px solid var(--line);background:var(--paper);border-radius:22px;padding:26px;box-shadow:var(--sh)}
 .lead-link{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:15px;color:rgba(244,247,255,.8);text-decoration:none;transition:color .2s}
 .lead-link:hover{color:var(--gold)}
+.ph{display:inline-block;border:1px dashed var(--gold);color:var(--gold);background:rgba(242,193,78,.08);border-radius:8px;padding:1px 8px;font-size:.85em;font-weight:700}
 
 /* Hero */
-.hero{padding-top:120px;padding-bottom:40px}
+.hero{padding-top:120px;padding-bottom:40px;position:relative;overflow:hidden}
 @media(min-width:1024px){.hero{padding-top:150px}}
-.hero-grid{display:grid;gap:24px;grid-template-areas:"eb" "ti" "sc" "su" "ct"}
+.hero::before{content:"";position:absolute;inset:-20% -10% auto -10%;height:130%;z-index:0;pointer-events:none;filter:blur(64px);opacity:.9;
+  background:
+    radial-gradient(40% 50% at 20% 30%,rgba(242,193,78,.16),transparent 70%),
+    radial-gradient(45% 55% at 82% 22%,rgba(35,54,91,.9),transparent 70%),
+    radial-gradient(50% 60% at 60% 80%,rgba(28,55,104,.8),transparent 72%);
+  background-size:200% 200%;background-position:0% 50%;animation:aurora 20s ease-in-out infinite}
+@keyframes aurora{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero-grid{position:relative;z-index:1;display:grid;gap:24px;grid-template-areas:"eb" "ti" "sc" "su" "ct"}
 @media(min-width:1024px){.hero-grid{grid-template-columns:1.05fr .95fr;column-gap:40px;align-items:center;grid-template-areas:"eb sc" "ti sc" "su sc" "ct sc"}}
 .hero .eb{grid-area:eb}.hero .ti{grid-area:ti}.hero .su{grid-area:su}.hero .ct{grid-area:ct}.hero .sc{grid-area:sc}
-.hero h1{font-size:clamp(2.5rem,7.6vw,5rem);line-height:1;letter-spacing:-.03em;max-width:16ch;text-wrap:balance}
-.hero h1 k{color:var(--gold)}
+.hero h1{font-size:clamp(2.5rem,7.2vw,5rem);line-height:1;letter-spacing:-.03em;max-width:16ch;text-wrap:balance}
+.hero h1 .hl{color:var(--gold)}
+.hero h1 .w{display:inline-block;will-change:transform,opacity}
 .hero .su{max-width:48ch;font-size:18px;line-height:1.6;color:var(--muted)}
-.hero .ct{display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+.hero .ct{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
 .btn-lg{padding:15px 28px;font-size:15px}
 .scene{position:relative;display:grid;place-items:center;height:44vh;max-height:340px;width:100%;max-width:480px;margin:0 auto}
 @media(min-width:1024px){.scene{height:60vh;max-height:560px;max-width:none}}
-.scene .glyph{font-weight:800;font-size:34vw;line-height:.8;color:rgba(242,193,78,.14);user-select:none;animation:floaty 6s ease-in-out infinite}
+.scene .glyph{font-weight:800;font-size:34vw;line-height:.8;color:rgba(242,193,78,.14);user-select:none;animation:floaty 6s ease-in-out infinite;will-change:transform}
 @media(min-width:1024px){.scene .glyph{font-size:13vw}}
 .scene::before{content:"";position:absolute;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(242,193,78,.16),transparent 70%);filter:blur(34px)}
+.scene .chip{position:absolute;display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:rgba(22,41,74,.72);backdrop-filter:blur(10px);border-radius:14px;padding:9px 13px;font-weight:800;font-size:14px;color:var(--ink);box-shadow:var(--sh-sm);will-change:transform}
+.scene .chip small{display:block;font-weight:600;font-size:11px;color:var(--muted)}
+.scene .chip.c1{top:8%;left:2%}.scene .chip.c2{bottom:10%;right:0}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.scrollcue{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:2;color:var(--gold);opacity:.7;animation:cue 1.5s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,7px)}}
 
 /* sections */
 .sec{padding:88px 0}
@@ -92,26 +116,102 @@ h1,h2,h3{font-weight:800;letter-spacing:-.02em}
 .cardhover{transition:transform .3s,box-shadow .3s}
 .cardhover:hover{transform:translateY(-6px);box-shadow:var(--sh-lg);border-color:rgba(242,193,78,.3)}
 
+/* JOURNEY */
+.journey{padding:96px 0 24px;overflow:hidden}
+.journey .sec-head{margin:0 auto;text-align:center}
+.j-wrap{position:relative;margin-top:56px}
+.j-rail{position:absolute;left:0;top:62px;height:4px;width:100%;background:var(--line);border-radius:4px;overflow:hidden;z-index:0}
+.j-rail span{position:absolute;inset:0;background:linear-gradient(90deg,var(--gold),var(--gold2));transform-origin:left;transform:scaleX(.04)}
+.j-track{display:flex;gap:22px;padding:0 20px}
+.j-stop{flex:0 0 86%;max-width:360px;scroll-snap-align:center}
+@media(min-width:768px){.j-stop{flex:0 0 340px}}
+.j-card{position:relative;border:1px solid var(--line);background:var(--paper);border-radius:24px;padding:26px;box-shadow:var(--sh);height:100%}
+.j-card.is-final{border-color:var(--gold);box-shadow:0 24px 60px -28px rgba(242,193,78,.5)}
+.j-dot{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--soft);color:var(--gold);font-weight:800;font-size:19px;border:3px solid var(--navy);box-shadow:var(--sh-sm);margin-bottom:18px}
+.j-card.is-final .j-dot{background:var(--gold);color:#10203b}
+.j-lvl{display:flex;align-items:baseline;gap:10px}
+.j-lvl b{font-weight:800;font-size:30px;letter-spacing:-.02em;color:var(--ink)}
+.j-time{font-size:13px;font-weight:700;color:var(--gold);background:var(--soft);border-radius:999px;padding:3px 11px}
+.j-card p{margin-top:14px;font-size:15.5px;line-height:1.6;color:var(--muted)}
+.j-sum{margin-top:30px;text-align:center;font-weight:800;font-size:clamp(1.1rem,2.6vw,1.6rem);color:var(--ink)}
+.j-sum .big{color:var(--gold)}
+@media(max-width:767px){.j-track{flex-direction:column;align-items:stretch}.j-stop{flex:1 1 auto;max-width:none}.j-rail{display:none}}
+@media(min-width:768px){.j-track{overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:18px;scrollbar-width:thin}}
+
+/* OFFER */
+.tiers{display:grid;gap:22px;margin-top:48px;grid-template-columns:1fr}
+@media(min-width:860px){.tiers{grid-template-columns:1fr 1.08fr}}
+.tier{position:relative;border:1px solid var(--line);background:var(--paper);border-radius:26px;padding:32px 28px;box-shadow:var(--sh);display:flex;flex-direction:column}
+.tier.feat{border-color:var(--gold)}
+.tier.feat::before{content:"";position:absolute;inset:-1px;border-radius:26px;padding:1px;background:linear-gradient(120deg,var(--gold),var(--gold2),var(--gold));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;animation:ring 3.4s ease-in-out infinite;pointer-events:none}
+@keyframes ring{0%,100%{opacity:.3}50%{opacity:.95}}
+.badge{position:absolute;top:-13px;left:28px;background:var(--gold);color:#10203b;font-weight:800;font-size:12px;letter-spacing:.04em;padding:6px 14px;border-radius:999px;box-shadow:var(--sh-sm)}
+.tier .lvl{font-weight:800;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.tier h3{font-size:25px;margin-top:8px}
+.tier .desc{margin-top:10px;font-size:15px;line-height:1.55;color:var(--muted)}
+.tier .price{margin-top:20px;font-weight:800;font-size:22px;color:var(--ink);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tier ul{list-style:none;margin:20px 0 24px;display:grid;gap:10px}
+.tier li{display:flex;gap:10px;font-size:15px;color:var(--ink);line-height:1.45}
+.tier li .chk{flex:none;width:20px;height:20px;border-radius:50%;background:var(--soft);color:var(--gold);display:grid;place-items:center;font-size:12px;font-weight:800;margin-top:1px}
+.tier .btn{margin-top:auto;width:100%}
+.scarcity{margin-top:26px;text-align:center;font-size:14.5px;color:var(--muted);font-style:italic}
+.faq{margin-top:48px;max-width:760px;margin-inline:auto;display:grid;gap:12px}
+.faq details{border:1px solid var(--line);background:var(--paper);border-radius:16px;padding:0 22px;box-shadow:var(--sh-sm);overflow:hidden}
+.faq summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:700;font-size:16.5px;color:var(--ink);display:flex;justify-content:space-between;gap:16px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:22px;color:var(--gold);transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 20px;font-size:15px;line-height:1.65;color:var(--muted)}
+.proof{margin-top:44px;display:grid;gap:16px;grid-template-columns:1fr;max-width:880px;margin-inline:auto}
+@media(min-width:760px){.proof{grid-template-columns:1fr 1fr}}
+.proof .q{border:1px solid var(--line);background:var(--paper);border-radius:18px;padding:22px;box-shadow:var(--sh-sm)}
+.proof .stars{color:var(--gold);font-size:15px;letter-spacing:2px}
+.proof .q p{margin-top:10px;font-size:15px;color:var(--ink);line-height:1.55}
+.proof .q .who{margin-top:12px;font-size:13px;color:var(--muted)}
+.proof .note{grid-column:1/-1;font-size:12.5px;font-style:italic;color:rgba(157,176,208,.85);text-align:center}
+
+/* PREMIUM */
+.prem-panel{position:relative;overflow:hidden;border-radius:32px;border:1px solid var(--line);background:var(--paper);box-shadow:var(--sh);padding:44px 28px;margin-top:48px}
+@media(min-width:640px){.prem-panel{padding:56px}}
+.prem-grid{display:grid;gap:36px;align-items:center}
+@media(min-width:920px){.prem-grid{grid-template-columns:1fr .92fr}}
+.prem-list{list-style:none;margin:24px 0 28px;display:grid;gap:16px}
+.prem-list li{display:flex;gap:13px;font-size:15.5px;line-height:1.5}
+.prem-list li b{color:var(--ink);font-weight:800}
+.prem-list .ico{flex:none;width:38px;height:38px;border-radius:11px;background:var(--soft);display:grid;place-items:center;font-size:19px}
+.prem-list span.tx{color:var(--muted)}
+.vault{position:relative;border-radius:22px;border:1px solid var(--line);background:var(--soft);padding:18px;box-shadow:var(--sh-lg)}
+.vault-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;transition:filter .8s ease}
+html.js .vault.locked .vault-grid{filter:blur(13px)}
+.vault-grid .th{aspect-ratio:16/10;border-radius:12px;border:1px dashed var(--line);background:var(--paper);display:grid;place-items:center;font-size:12.5px;font-weight:700;color:var(--muted);text-align:center;gap:4px}
+.vault-grid .th .e{font-size:22px}
+.lock{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:10px;background:rgba(14,27,51,.5);backdrop-filter:blur(2px);border-radius:22px;transition:opacity .7s}
+.lock .ic{width:54px;height:54px;border-radius:50%;background:var(--gold);color:#10203b;display:grid;place-items:center;font-size:24px;box-shadow:var(--sh)}
+.lock .lab{font-weight:800;color:var(--gold)}
+.vault.open .lock{opacity:0;pointer-events:none}
+
 /* example cards */
 .lesson{display:flex;flex-direction:column;gap:16px;height:100%}
 .lesson .top{display:flex;align-items:center;justify-content:space-between}
 .approx{display:inline-flex;align-items:center;border-radius:999px;background:var(--soft);padding:4px 10px;font-size:12.5px;font-weight:600;color:var(--gold)}
 .lesson .de{font-weight:800;font-size:22px;line-height:1.15;color:var(--ink)}
 .lesson .tr{display:flex;align-items:center;gap:8px;margin-top:auto;border-top:1px solid var(--line);padding-top:16px;font-size:15px;font-weight:500;color:var(--muted)}
+.marquee{margin-top:44px;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee .track{display:inline-flex;gap:34px;white-space:nowrap;font-weight:800;font-size:20px;color:rgba(242,193,78,.3);animation:marq 28s linear infinite;will-change:transform}
+.marquee .track span{display:inline-block}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* PDF lead magnet */
+/* PDF */
 .pdf-panel{position:relative;overflow:hidden;border-radius:32px;border:1px solid var(--line);background:var(--paper);box-shadow:var(--sh);padding:40px 28px}
 @media(min-width:640px){.pdf-panel{padding:56px}}
 .pdf-panel::before{content:"";position:absolute;right:-100px;top:-100px;width:320px;height:320px;border-radius:50%;background:rgba(242,193,78,.14);filter:blur(44px);pointer-events:none}
 .pdf-grid{position:relative;display:grid;gap:32px;align-items:center}
 @media(min-width:860px){.pdf-grid{grid-template-columns:1fr .9fr}}
 .pdf-grid h2{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.05}
-.pdf-grid h2 k{color:var(--gold)}
 .pdf-list{list-style:none;margin:22px 0 0;display:grid;gap:12px}
 .pdf-list li{display:flex;gap:11px;font-size:15.5px;font-weight:500;color:var(--ink);line-height:1.45}
 .pdf-list b{color:var(--gold)}
 .chk{flex:none;width:22px;height:22px;border-radius:50%;background:var(--soft);color:var(--gold);display:grid;place-items:center;font-size:13px;font-weight:800;margin-top:1px}
-/* script mock */
 .pdf-mock{position:relative;border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,#10213e,#0c1830);box-shadow:var(--sh-lg);padding:22px;transform:rotate(-1.5deg)}
 .pdf-mock .lbl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .pdf-mock .ln{display:flex;gap:11px;align-items:baseline;padding:9px 0}
@@ -140,10 +240,11 @@ h1,h2,h3{font-weight:800;letter-spacing:-.02em}
 .nl{padding:40px 0 64px}
 .nl-panel{position:relative;overflow:hidden;border-radius:32px;background:linear-gradient(160deg,#0A1426,#0c1a33);border:1px solid rgba(242,193,78,.35);color:var(--ink);padding:64px 28px;text-align:center}
 @media(min-width:640px){.nl-panel{padding:64px 56px}}
-.nl-panel::before{content:"";position:absolute;left:-80px;bottom:-30%;width:320px;height:320px;border-radius:50%;background:rgba(242,193,78,.28);filter:blur(52px)}
+.nl-panel::before{content:"";position:absolute;left:-80px;bottom:-30%;width:340px;height:340px;border-radius:50%;background:rgba(242,193,78,.28);filter:blur(52px);animation:nlglow 12s ease-in-out infinite}
+@keyframes nlglow{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,-30px)}}
 .nl-inner{position:relative;max-width:42rem;margin:0 auto}
 .nl h2{color:var(--ink);font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.05;text-wrap:balance}
-.nl h2 k{color:var(--gold)}
+.nl h2 .hl{color:var(--gold)}
 .nl p.sub{margin:16px auto 0;max-width:46ch;font-size:17px;line-height:1.6;color:rgba(244,247,255,.72)}
 .nl form{display:flex;flex-direction:column;gap:12px;max-width:28rem;margin:36px auto 0}
 @media(min-width:640px){.nl form{flex-direction:row}}
@@ -163,20 +264,26 @@ h1,h2,h3{font-weight:800;letter-spacing:-.02em}
 /* reveal */
 html.js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
 html.js .reveal.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){html.js .reveal{opacity:1!important;transform:none!important;transition:none}.scene .glyph{animation:none}*{scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){
+  html.js .reveal{opacity:1!important;transform:none!important;transition:none}
+  html.js .uline.drawn svg path{transition:none}
+  .scene .glyph,.hero::before,.nl-panel::before,.marquee .track,.tier.feat::before,.scrollcue,.btn.pulse{animation:none!important}
+  *{scroll-behavior:auto!important}
+}
 </style></head>
 <body>
+<div id="glow" aria-hidden="true"></div>
 
 <header>
   <nav class="wrap" style="padding-left:18px;padding-right:10px">
     <a href="#top" class="brandmark"><span class="gbox">G</span><span class="brandname">Genau<b>!</b></span></a>
     <div class="navlinks">
+      <a href="#journey" class="ghost">Courses</a>
       <a href="#how" class="ghost">How it works</a>
-      <a href="#examples" class="ghost">Examples</a>
+      <a href="#premium" class="ghost">Premium</a>
       <a href="#pdf" class="ghost">Free PDF</a>
-      <a href="#why" class="ghost">Why</a>
     </div>
-    <a href="#pdf" class="btn nav-cta">Free PDF</a>
+    <a href="#journey" class="btn nav-cta">Start B1</a>
   </nav>
 </header>
 
@@ -185,27 +292,134 @@ html.js .reveal.in{opacity:1;transform:none}
   <!-- HERO -->
   <section class="hero wrap">
     <div class="hero-grid">
-      <div class="eb reveal"><span class="pill">🇬🇧 → 🇩🇪 · survive the room</span></div>
-      <h1 class="ti reveal">Survive real German, <k>one room at a time.</k></h1>
-      <div class="sc"><div class="scene"><span class="glyph" aria-hidden="true">äöü</span></div></div>
-      <p class="su reveal">From the Bürgeramt to the Bäckerei — the exact lines for the moments that actually happen. No grammar drills, no freezing at the counter.</p>
+      <div class="eb reveal"><span class="pill">🇬🇧 → 🇩🇪 · A1 → B1 · 🎁 First lesson free</span></div>
+      <h1 class="ti" data-split>Zero to <span class="hl">B1</span> German in just 4.5 months.</h1>
+      <div class="sc">
+        <div class="scene">
+          <span class="glyph" aria-hidden="true">äöü</span>
+          <div class="chip c1" aria-hidden="true">A1 → B1<small>3 courses · 4.5 mo</small></div>
+          <div class="chip c2" aria-hidden="true">★ Premium<small>library + videos</small></div>
+        </div>
+      </div>
+      <p class="su reveal">Private-lesson quality, 1-on-1 plus small group. 3 courses, 3 clear levels: A1 → A2 → B1. Each course is 1.5 months. Get ready to live, work and pass exams in Germany — no wasted steps, no detours.</p>
       <div class="ct reveal">
-        <a href="#pdf" class="btn btn-lg">Get the free PDF</a>
-        <a href="#how" class="lead-link">How it works <span aria-hidden="true">↓</span></a>
+        <a href="#journey" class="btn btn-lg pulse" data-magnetic>Start Zero to B1</a>
+        <a href="#pdf" class="lead-link">Get the free PDF, then decide <span aria-hidden="true">↓</span></a>
       </div>
     </div>
+    <div class="scrollcue" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
   </section>
 
   <!-- HOW IT WORKS -->
   <section id="how" class="sec wrap" style="scroll-margin-top:96px">
     <div class="reveal">
       <p class="eyebrow">How it works</p>
-      <h2 class="h2" style="margin-top:12px;max-width:18ch">Three steps. One minute each.</h2>
+      <h2 class="h2" style="margin-top:12px;max-width:20ch"><span class="uline">A little, every day</span> — that's how it sticks.</h2>
     </div>
     <div class="grid3">
-      <article class="card cardhover step reveal"><div class="step-ico">📅</div><h3>One scene a day</h3><p>1 minute, on your phone, standing in line.</p><span class="num">01</span></article>
-      <article class="card cardhover step reveal" style="transition-delay:.1s"><div class="step-ico">🚪</div><h3>Real rooms, real lines</h3><p>U-Bahn, Bäckerei, Bürgeramt, Apotheke — use it today.</p><span class="num">02</span></article>
-      <article class="card cardhover step reveal" style="transition-delay:.2s"><div class="step-ico">🗣️</div><h3>Say it without freezing</h3><p>The exact words, in order, with a rough English sound.</p><span class="num">03</span></article>
+      <article class="card cardhover step reveal"><div class="step-ico">📅</div><h3>Regular lessons + homework</h3><p>1-on-1 and small group. One clear step every week, no overwhelm.</p><span class="num" data-odo="1">01</span></article>
+      <article class="card cardhover step reveal" style="transition-delay:.1s"><div class="step-ico">🚪</div><h3>Real rooms, real lines</h3><p>U-Bahn, Bäckerei, Bürgeramt, Apotheke — not drills, lines you use today.</p><span class="num" data-odo="2">02</span></article>
+      <article class="card cardhover step reveal" style="transition-delay:.2s"><div class="step-ico">🗣️</div><h3>Speak from day one</h3><p>Talk in your very first lesson. Mistakes welcome, progress guaranteed.</p><span class="num" data-odo="3">03</span></article>
+    </div>
+  </section>
+
+  <!-- B1 JOURNEY (NEW centerpiece) -->
+  <section id="journey" class="journey wrap" style="scroll-margin-top:90px">
+    <div class="sec-head reveal">
+      <p class="eyebrow">The 3-Course Journey</p>
+      <h2 class="h2" style="margin-top:12px"><span class="uline">A clean line</span> from zero to B1.</h2>
+      <p style="margin-top:16px;font-size:18px;color:var(--muted);max-width:46ch;margin-inline:auto">Three courses, three clear levels. 1.5 months each. Always know where you are and where you're going.</p>
+    </div>
+    <div class="j-wrap">
+      <div class="j-rail" aria-hidden="true"><span></span></div>
+      <div class="j-track">
+        <div class="j-stop reveal"><div class="j-card"><div class="j-dot">0</div><div class="j-lvl"><b>Start</b><span class="j-time">zero</span></div><p>No German yet. We start right here — with the alphabet and your first sentences.</p></div></div>
+        <div class="j-stop reveal"><div class="j-card"><div class="j-dot">A1</div><div class="j-lvl"><b>Course 1</b><span class="j-time">1.5 mo</span></div><p>Introduce yourself and handle daily life: shopping, appointments, asking for directions. You'll speak your first real sentences here.</p></div></div>
+        <div class="j-stop reveal"><div class="j-card"><div class="j-dot">A2</div><div class="j-lvl"><b>Course 2</b><span class="j-time">1.5 mo</span></div><p>Talk about your past, your plans and how you feel. Manage phone calls and the basics of official correspondence.</p></div></div>
+        <div class="j-stop reveal"><div class="j-card is-final"><div class="j-dot">B1</div><div class="j-lvl"><b>Course 3</b><span class="j-time">1.5 mo</span></div><p>Express and defend opinions, handle work and study life. B1 is the level you need for residency, jobs and most exams.</p></div></div>
+      </div>
+    </div>
+    <p class="j-sum reveal">Total: <span class="big" data-odo-f="3">3</span> courses × 1.5 months = <span class="big" data-odo-f="4.5">4.5</span> months. Zero to <span class="big">B1</span>.</p>
+  </section>
+
+  <!-- OFFER / PRICING -->
+  <section id="offer" class="sec wrap" style="scroll-margin-top:96px">
+    <div class="sec-head reveal" style="max-width:46rem">
+      <p class="eyebrow">The Offer</p>
+      <h2 class="h2" style="margin-top:12px"><span class="uline">First lesson free</span>. Then decide.</h2>
+      <p style="margin-top:16px;font-size:18px;color:var(--muted)">€14 per lesson. Go at the pace you want: each level is 1.5 months, 3 levels = B1 in 4.5 months. Billed monthly, bulk discount.</p>
+    </div>
+    <div class="tiers">
+      <article class="tier reveal">
+        <span class="lvl">3 lessons/week · monthly</span>
+        <h3>Steady Pace</h3>
+        <p class="desc">Consistent progress. 1-on-1 + small-group lessons, Premium account included. Each level 1.5 months.</p>
+        <div class="price">€155<span style="font-size:14px;font-weight:600;color:var(--muted)">/mo</span></div>
+        <ul>
+          <li><span class="chk">✓</span>3 lessons a week (1-on-1 + group)</li>
+          <li><span class="chk">✓</span>Premium account (library + videos)</li>
+          <li><span class="chk">✓</span>First lesson free · bulk discount</li>
+        </ul>
+        <a href="https://ig.me/m/genaugerman" target="_blank" rel="noopener" class="btn">Get your free first lesson</a>
+      </article>
+      <article class="tier feat reveal" style="transition-delay:.08s">
+        <span class="badge">FASTEST · B1 GUARANTEED</span>
+        <span class="lvl">4 lessons/week · monthly</span>
+        <h3>Guaranteed B1</h3>
+        <p class="desc">The pace we recommend for the B1 guarantee. The fastest route — zero to B1 in 4.5 months.</p>
+        <div class="price">€200<span style="font-size:14px;font-weight:600;color:var(--muted)">/mo</span></div>
+        <ul>
+          <li><span class="chk">✓</span>4 lessons a week — guarantee pace</li>
+          <li><span class="chk">✓</span>Premium account (all levels)</li>
+          <li><span class="chk">✓</span>First lesson free · bulk discount</li>
+          <li><span class="chk">✓</span>Zero to B1 · better per-lesson rate</li>
+        </ul>
+        <a href="https://ig.me/m/genaugerman" target="_blank" rel="noopener" class="btn pulse" data-magnetic>Reserve your seat</a>
+      </article>
+    </div>
+    <p class="scarcity reveal">Seats are running out — we take a small number of students each term so everyone gets real attention. <b style="color:var(--ink)">Message us now, let's talk:</b> <a href="https://ig.me/m/genaugerman" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700">DM @genaugerman →</a></p>
+
+    <div class="faq">
+      <details class="reveal"><summary>I don't speak any German — do we really start from zero?</summary><p>Yes, completely from zero. A1 is built for absolute beginners; we start with the alphabet and your first sentences.</p></details>
+      <details class="reveal"><summary>Is 4.5 months really enough?</summary><p>The plan assumes you attend regular weekly lessons and do the homework. If you stay consistent, B1 is a realistic goal — it's a clear system, not magic.</p></details>
+      <details class="reveal"><summary>Is it 1-on-1 or group?</summary><p>Both: 1-on-1 for your personal progress, small group for real speaking practice. The balance of the two is the fastest route.</p></details>
+      <details class="reveal"><summary>What if I miss a lesson?</summary><p>Missed lessons can be made up, but not back to back: if you miss one week, you shouldn't miss the next (make-up within two weeks). You also close the gap right away with the exclusive videos in your Premium library.</p></details>
+      <details class="reveal"><summary>What can I actually do with B1?</summary><p>B1 is the level required for residency, many job applications and most language exams in Germany. You can run daily life on your own.</p></details>
+      <details class="reveal"><summary>How does payment work?</summary><p>Billed monthly, in advance: 3 lessons/week is €155/mo, 4 lessons/week is €200/mo (better per-lesson rate). €14 per lesson; the monthly/bulk package is discounted. The first trial lesson is free. Let's sort the details over DM.</p></details>
+    </div>
+
+    <div class="proof">
+      <div class="q reveal"><div class="stars">★★★★★</div><p>"We started from zero — a beginner who was really struggling. With 3 lessons a week, grades went up and A2 was done in about 3 months. Later, on a trip to Austria, they actually spoke German — dialect and all."</p><div class="who">Beginner · zero to A2 (~3 months) · <span class="ph">name optional</span></div></div>
+      <div class="q reveal" style="transition-delay:.08s"><div class="stars">★★★★★</div><p>"<span class="ph">New student review — to be added</span>"</p><div class="who"><span class="ph">Name, level</span></div></div>
+      <p class="note">Reviews come from real students — no fake counts or ratings are used here.</p>
+    </div>
+  </section>
+
+  <!-- PREMIUM UNLOCK -->
+  <section id="premium" class="sec wrap" style="scroll-margin-top:96px">
+    <div class="prem-panel reveal">
+      <div class="prem-grid">
+        <div>
+          <p class="eyebrow">Premium account</p>
+          <h2 class="h2" style="margin-top:12px"><span class="uline">What you unlock</span> with Premium</h2>
+          <ul class="prem-list">
+            <li><span class="ico">📚</span><span><b>Resource library.</b> <span class="tx">PDFs, vocabulary lists, grammar summaries and worksheets for every level — all in one place.</span></span></li>
+            <li><span class="ico">🎬</span><span><b>Exclusive videos.</b> <span class="tx">Student-only lesson and review videos you won't find anywhere else.</span></span></li>
+            <li><span class="ico">🔁</span><span><b>Unlimited replay.</b> <span class="tx">Re-watch any topic you missed, as many times as you need.</span></span></li>
+            <li><span class="ico">🗺️</span><span><b>Guided progression.</b> <span class="tx">Follow the A1 → A2 → B1 roadmap and always know what to study next.</span></span></li>
+          </ul>
+          <a href="#offer" class="btn btn-lg" data-magnetic>Explore premium</a>
+        </div>
+        <div class="vault locked" aria-hidden="true">
+          <div class="vault-grid">
+            <div class="th"><span class="e">🎬</span>exclusive video</div>
+            <div class="th"><span class="e">📄</span>PDF · A1</div>
+            <div class="th"><span class="e">🧩</span>worksheet</div>
+            <div class="th"><span class="e">🎬</span>review video</div>
+          </div>
+          <div class="lock"><div class="ic">🔒</div><div class="lab">Premium</div></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -213,8 +427,8 @@ html.js .reveal.in{opacity:1;transform:none}
   <section id="examples" class="sec wrap" style="scroll-margin-top:96px">
     <div class="reveal sec-head">
       <p class="eyebrow">Survival lines</p>
-      <h2 class="h2" style="margin-top:12px">The lines you'll actually use</h2>
-      <p style="margin-top:16px;font-size:18px;color:var(--muted)">One card a day. Save it, read it, survive the room.</p>
+      <h2 class="h2" style="margin-top:12px"><span class="uline">The lines</span> you'll actually use</h2>
+      <p style="margin-top:16px;font-size:18px;color:var(--muted)">Inside each course — the exact words for the rooms that actually happen.</p>
     </div>
     <div class="grid4">
       <article class="card cardhover lesson reveal"><div class="top"><span style="font-size:18px">🇩🇪</span><span class="approx">≈ ish mershte mish an-melden</span></div><p lang="de" class="de">Ich möchte mich anmelden.</p><div class="tr"><span>🇬🇧</span>I'd like to register.</div></article>
@@ -222,6 +436,7 @@ html.js .reveal.in{opacity:1;transform:none}
       <article class="card cardhover lesson reveal" style="transition-delay:.2s"><div class="top"><span style="font-size:18px">🇩🇪</span><span class="approx">≈ vass kostet das</span></div><p lang="de" class="de">Was kostet das?</p><div class="tr"><span>🇬🇧</span>How much is this?</div></article>
       <article class="card cardhover lesson reveal" style="transition-delay:.3s"><div class="top"><span style="font-size:18px">🇩🇪</span><span class="approx">≈ ent-shool-digung vo ist</span></div><p lang="de" class="de">Entschuldigung, wo ist…?</p><div class="tr"><span>🇬🇧</span>Excuse me, where is…?</div></article>
     </div>
+    <div class="marquee reveal" aria-hidden="true"><div class="track"><span>Anmeldung · Termin · Was kostet das? · Ich möchte… · Wo ist…? · Können Sie…? · Entschuldigung · Ich brauche… · Bürgeramt · </span><span>Anmeldung · Termin · Was kostet das? · Ich möchte… · Wo ist…? · Können Sie…? · Entschuldigung · Ich brauche… · Bürgeramt · </span></div></div>
   </section>
 
   <!-- PDF LEAD MAGNET -->
@@ -257,14 +472,14 @@ html.js .reveal.in{opacity:1;transform:none}
       <div class="why-grid">
         <div>
           <p class="eyebrow">Why it works</p>
-          <h2 class="h2" style="margin-top:12px">A little, every day. That's how it sticks.</h2>
-          <p class="body">A one-hour lesson is gone in three days. A one-minute scene, repeated daily, stays. Genau! focuses on a single habit: today's line, in the room where you'll need it. No pressure, no levels — just small, real, useful progress.</p>
+          <h2 class="h2" style="margin-top:12px"><span class="uline">A clear system</span>, no detours.</h2>
+          <p class="body">Scattered resources and "someday" plans don't work. Genau! focuses on one clear line: A1 → A2 → B1, 1.5 months each. With 1-on-1 support, real speaking and premium resources, you reach B1 in 4.5 months — structure, not pressure.</p>
         </div>
         <div class="stats">
-          <div class="stat"><span class="v">1 min</span><span class="l">a day</span></div>
-          <div class="stat"><span class="v">A1–A2</span><span class="l">from zero</span></div>
-          <div class="stat"><span class="v">0</span><span class="l">grammar drills</span></div>
-          <p class="soc">Community numbers soon — the first wave is joining.</p>
+          <div class="stat reveal"><span class="v" data-odo-f="3">3</span><span class="l">courses · A1 → A2 → B1</span></div>
+          <div class="stat reveal"><span class="v" data-odo-f="4.5">4.5</span><span class="l">months from zero to B1</span></div>
+          <div class="stat reveal"><span class="v">B1</span><span class="l">residency · work · exam level</span></div>
+          <p class="soc">Student reviews will be added from real students — no invented numbers.</p>
         </div>
       </div>
     </div>
@@ -274,19 +489,19 @@ html.js .reveal.in{opacity:1;transform:none}
   <section class="nl wrap">
     <div class="nl-panel reveal">
       <div class="nl-inner">
-        <h2>One survival scene a day, <k>in your inbox</k></h2>
+        <h2 data-split>One survival scene a day, <span class="hl">in your inbox</span></h2>
         <p class="sub">Drop your email — we'll send the line you'll actually need, with the English meaning. Unsubscribe anytime.</p>
         <form id="nlform">
           <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Your email</label>
           <input id="email" type="email" required placeholder="you@email.com" autocomplete="email">
-          <button type="submit">Sign me up</button>
+          <button type="submit" data-magnetic>Sign me up</button>
         </form>
         <p class="done" id="nldone"><span aria-hidden="true">🌱</span> Thanks! The email list opens very soon — you'll be first to know.</p>
         <p class="consent">No spam. Just today's scene.</p>
       </div>
     </div>
     <div class="footrow">
-      <div class="footbrand"><span class="gbox">G</span><div><p class="n">Genau!</p><p class="t">Survive real German — daily.</p></div></div>
+      <div class="footbrand"><span class="gbox">G</span><div><p class="n">Genau!</p><p class="t">Zero to B1 — survive real German, daily.</p></div></div>
       <a href="https://instagram.com/genaugerman" target="_blank" rel="noopener" class="lead-link"><span aria-hidden="true">📸</span> @genaugerman</a>
     </div>
   </section>
@@ -295,16 +510,80 @@ html.js .reveal.in{opacity:1;transform:none}
 
 <script>
 (function(){
-  var els=document.querySelectorAll('.reveal');
-  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
-  var io=new IntersectionObserver(function(ents){ents.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
-  els.forEach(function(e){io.observe(e);});
-  setTimeout(function(){els.forEach(function(e){e.classList.add('in');});},2500);
+  var SVG='<svg viewBox="0 0 320 14" preserveAspectRatio="none" aria-hidden="true"><path d="M4 9 C 70 2, 150 2, 316 8"/></svg>';
+  document.querySelectorAll('.uline').forEach(function(u){u.insertAdjacentHTML('beforeend',SVG);});
 })();
 document.getElementById('nlform').addEventListener('submit',function(e){
-  e.preventDefault();
-  this.style.display='none';
-  document.getElementById('nldone').style.display='inline-flex';
+  e.preventDefault();this.style.display='none';document.getElementById('nldone').style.display='inline-flex';
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+  var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var FINE=matchMedia('(pointer:fine)').matches;
+  function fallbackReveal(){document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in');});document.querySelectorAll('.uline').forEach(function(u){u.classList.add('drawn');});}
+  function ioReveal(){
+    if(!('IntersectionObserver' in window)){fallbackReveal();return;}
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');if(en.target.classList.contains('uline'))en.target.classList.add('drawn');io.unobserve(en.target);}});},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal,.uline').forEach(function(e){io.observe(e);});
+    setTimeout(fallbackReveal,2600);
+  }
+  function start(){
+    if(RM||!window.gsap||!window.ScrollTrigger){fallbackReveal();ioReveal();return;}
+    try{
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.defaults({ease:'power3.out',duration:.9});
+      ScrollTrigger.config({ignoreMobileResize:true});
+      if(window.Lenis){
+        var lenis=new Lenis({duration:1.1,smoothWheel:true,smoothTouch:false,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));}});
+        lenis.on('scroll',ScrollTrigger.update);
+        gsap.ticker.add(function(t){lenis.raf(t*1000);});
+        gsap.ticker.lagSmoothing(0);
+      }
+      ScrollTrigger.batch('.reveal',{start:'top 88%',onEnter:function(b){gsap.to(b,{opacity:1,y:0,stagger:.08,overwrite:true});},onEnterBack:function(b){gsap.to(b,{opacity:1,y:0,overwrite:true});}});
+      ScrollTrigger.batch('.uline',{start:'top 84%',onEnter:function(b){b.forEach(function(u){u.classList.add('drawn');});}});
+      document.querySelectorAll('[data-split]').forEach(function(h){
+        var html=h.innerHTML, parts=html.split(/(<[^>]+>[^<]*<\/[^>]+>|\s+)/).filter(Boolean), out='';
+        parts.forEach(function(p){ if(/^\s+$/.test(p)){out+=' ';} else if(/^</.test(p)){out+='<span class="w">'+p+'</span>';} else {p.split(/\s+/).forEach(function(wd){if(wd)out+='<span class="w">'+wd+'</span> ';});} });
+        h.innerHTML=out;
+      });
+      gsap.set('[data-split] .w',{yPercent:60,opacity:0});
+      gsap.to('.hero [data-split] .w',{yPercent:0,opacity:1,stagger:.06,duration:.8,delay:.15});
+      ScrollTrigger.create({trigger:'.nl-panel',start:'top 80%',once:true,onEnter:function(){gsap.to('.nl [data-split] .w',{yPercent:0,opacity:1,stagger:.05});}});
+      gsap.to('.scene .glyph',{yPercent:-16,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+      gsap.to('.scene .chip.c1',{yPercent:-26,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+      gsap.to('.scene .chip.c2',{yPercent:18,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+      ScrollTrigger.create({start:120,onEnter:function(){gsap.to('.scrollcue',{opacity:0,duration:.4});},onLeaveBack:function(){gsap.to('.scrollcue',{opacity:.7,duration:.4});}});
+      gsap.from('.step',{y:42,rotateZ:-3,opacity:0,stagger:.12,transformPerspective:800,scrollTrigger:{trigger:'#how',start:'top 76%'}});
+      document.querySelectorAll('[data-odo]').forEach(function(el){var to=+el.getAttribute('data-odo');ScrollTrigger.create({trigger:el,start:'top 92%',once:true,onEnter:function(){var o={v:0};gsap.to(o,{v:to,duration:1,snap:{v:1},onUpdate:function(){el.textContent=(o.v<10?'0':'')+Math.round(o.v);}});}});});
+      document.querySelectorAll('[data-odo-f]').forEach(function(el){var to=+el.getAttribute('data-odo-f');ScrollTrigger.create({trigger:el,start:'top 94%',once:true,onEnter:function(){var o={v:0};gsap.to(o,{v:to,duration:1.1,onUpdate:function(){el.textContent=(to%1?o.v.toFixed(1):Math.round(o.v));}});}});});
+      var track=document.querySelector('.j-track');
+      if(track&&innerWidth>=768){
+        var dist=function(){return Math.max(0,track.scrollWidth-track.clientWidth+40);};
+        if(dist()>40){track.style.overflow='visible';gsap.to(track,{x:function(){return -dist();},ease:'none',scrollTrigger:{trigger:'#journey',pin:true,scrub:1,end:function(){return '+='+dist();},invalidateOnRefresh:true}});}
+      }
+      gsap.to('.j-rail span',{scaleX:1,ease:'none',scrollTrigger:{trigger:'#journey',start:'top 70%',end:'bottom 60%',scrub:true}});
+      gsap.from('.j-card',{scale:.92,opacity:.001,stagger:.12,scrollTrigger:{trigger:'.j-track',start:'top 80%'}});
+      gsap.from('.tier',{y:36,opacity:0,stagger:.1,scrollTrigger:{trigger:'.tiers',start:'top 80%'}});
+      ScrollTrigger.create({trigger:'.vault',start:'top 72%',once:true,onEnter:function(){var v=document.querySelector('.vault');if(v){v.classList.remove('locked');v.classList.add('open');var lab=v.querySelector('.lab');if(lab)lab.textContent='Unlocked';gsap.from('.vault-grid .th',{scale:.9,opacity:0,stagger:.08,duration:.6});}}});
+      gsap.from('.pdf-mock',{rotate:-9,y:46,opacity:0,scrollTrigger:{trigger:'.pdf-panel',start:'top 78%'}});
+      if(FINE){document.querySelectorAll('[data-magnetic]').forEach(function(b){
+        b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();gsap.to(b,{x:(e.clientX-(r.left+r.width/2))*.28,y:(e.clientY-(r.top+r.height/2))*.4,duration:.4});});
+        b.addEventListener('mouseleave',function(){gsap.to(b,{x:0,y:0,duration:.6,ease:'elastic.out(1,.4)'});});
+      });}
+      if(FINE){var g=document.getElementById('glow');g.style.opacity='.5';var gx=innerWidth/2,gy=innerHeight/2,tx=gx,ty=gy;
+        addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;});
+        gsap.ticker.add(function(){gx+=(tx-gx)*.12;gy+=(ty-gy)*.12;g.style.transform='translate('+gx+'px,'+gy+'px)';});}
+      addEventListener('load',function(){ScrollTrigger.refresh();});
+      addEventListener('resize',function(){clearTimeout(window._rt);window._rt=setTimeout(function(){ScrollTrigger.refresh();},220);});
+    }catch(err){fallbackReveal();ioReveal();}
+  }
+  if(document.readyState==='complete')start();else window.addEventListener('load',start);
 });
 </script>
 </body></html>
