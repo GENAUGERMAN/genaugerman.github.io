@@ -73,6 +73,22 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;letter-spacing:-.02em;line-heig
 @media(prefers-reduced-motion:no-preference){.particles span{animation-name:rise;animation-timing-function:linear;animation-iteration-count:infinite}}
 @keyframes rise{0%{transform:translate3d(0,0,0) scale(.7);opacity:0}10%{opacity:.6}88%{opacity:.4}100%{transform:translate3d(var(--sx,0),-106vh,0) scale(1);opacity:0}}
 
+/* intro / ignition title sequence */
+.intro{display:none}
+html.intro-on .intro{display:grid;place-items:center;position:fixed;inset:0;z-index:90;pointer-events:none;
+  background:radial-gradient(62% 52% at 50% 44%,#ffffff 0%,#F5F7FB 72%)}
+html.intro-on .intro-lines{display:flex;flex-direction:column;gap:.06em;text-align:center;padding:0 18px}
+.il{font-family:var(--disp);font-weight:800;letter-spacing:-.035em;line-height:1.04;
+  font-size:clamp(2rem,8.6vw,5.6rem);color:var(--ink);opacity:0}
+.il b{color:var(--gold)}
+html.intro-on .il{animation:ignite .95s cubic-bezier(.2,.75,.2,1) both;animation-delay:calc(.4s + var(--i)*.6s)}
+@keyframes ignite{
+  0%{opacity:0;transform:translateY(20px) scale(1.14);text-shadow:0 0 0 rgba(242,201,120,0)}
+  45%{opacity:1;transform:translateY(0) scale(1);text-shadow:0 0 44px rgba(242,201,120,.95),0 0 14px rgba(255,255,255,.85)}
+  100%{opacity:1;transform:none;text-shadow:0 0 16px rgba(242,201,120,.3)}}
+html.intro-done .intro{animation:introOut .85s ease forwards}
+@keyframes introOut{to{opacity:0;visibility:hidden}}
+
 /* nav */
 header{position:fixed;inset-inline:0;top:0;z-index:60}
 nav{max-width:1140px;margin:14px auto 0;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);background:rgba(255,255,255,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:999px;padding:8px 8px 8px 18px;box-shadow:var(--sh)}
@@ -360,6 +376,11 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
 <div class="progress" aria-hidden="true"></div>
 <div class="aurora" aria-hidden="true"><b></b><b></b><b></b></div>
 <div class="particles" aria-hidden="true"></div>
+<div class="intro" aria-hidden="true"><div class="intro-lines">
+  <span class="il" style="--i:0">Zero to <b>B1</b>.</span>
+  <span class="il" style="--i:1">In <b>4.5</b> months.</span>
+  <span class="il" style="--i:2">First lesson <b>free</b>.</span>
+</div></div>
 
 <header>
   <nav class="wrap">
@@ -607,6 +628,18 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
 (function(){
   var h=document.documentElement;
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // intro / ignition title sequence (autoplay once per session, skippable, non-blocking)
+  var seen=false; try{seen=sessionStorage.getItem('genauIntro')==='1';}catch(e){}
+  if(!reduce && !seen){
+    try{sessionStorage.setItem('genauIntro','1');}catch(e){}
+    h.classList.add('intro-on');
+    var skipped=false;
+    var introEnd=function(){if(skipped)return;skipped=true;clearTimeout(it);h.classList.add('intro-done');
+      setTimeout(function(){var el=document.querySelector('.intro');if(el)el.style.display='none';h.classList.remove('intro-on');},900);};
+    var it=setTimeout(introEnd,2850);
+    ['wheel','touchstart','pointerdown','keydown'].forEach(function(ev){addEventListener(ev,function o(){introEnd();removeEventListener(ev,o);},{passive:true});});
+  }
 
   var rv=document.querySelectorAll('.rv, .jrow');
   if(!('IntersectionObserver' in window)){rv.forEach(function(e){e.classList.add('in')});}
