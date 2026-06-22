@@ -162,9 +162,8 @@ html.cine-on .lab.lit{opacity:1}
 @keyframes beam{to{--beam:360deg}}
 @keyframes labfloat{0%,100%{transform:translate(-50%,calc(-50% - 5px))}50%{transform:translate(-50%,calc(-50% + 5px))}}
 @keyframes labin{0%{opacity:0;box-shadow:0 0 0 0 rgba(242,201,120,0)}55%{opacity:1;box-shadow:0 0 30px 3px rgba(242,201,120,.9)}100%{opacity:1;box-shadow:0 14px 30px -16px rgba(14,27,51,.45)}}
-.lab.a{left:22%;top:24%}.lab.b{left:78%;top:29%}.lab.c{left:16%;top:58%}
-.lab.d{left:80%;top:63%}.lab.e{left:31%;top:82%}.lab.f{left:69%;top:84%}
-@media(min-width:760px){.lab{padding:12px 22px;font-size:16.5px}.lab.a{left:22%;top:23%}.lab.b{left:78%;top:27%}.lab.c{left:14%;top:57%}.lab.d{left:86%;top:61%}.lab.e{left:29%;top:83%}.lab.f{left:72%;top:84%}}
+.lab.a{left:19%;top:31%}.lab.b{left:81%;top:31%}.lab.c{left:50%;top:84%}
+@media(min-width:760px){.lab{padding:12px 22px;font-size:16.5px}.lab.a{left:17%;top:31%}.lab.b{left:83%;top:31%}.lab.c{left:50%;top:85%}}
 
 /* orb */
 .orbWrap{position:relative;display:grid;place-items:center}
@@ -177,15 +176,17 @@ html.cine-on .orb{width:min(48vmin,392px);animation:none;transform:scale(calc(.2
   background:radial-gradient(circle,rgba(242,201,120,.4),rgba(180,140,40,.12) 48%,transparent 72%)}
 @media(prefers-reduced-motion:no-preference){.orb-glow{animation:pulse 5s ease-in-out infinite}}
 @keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.07)}}
-.orb-disc{position:absolute;inset:0}
-.orb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
-@media(prefers-reduced-motion:no-preference){.orb-img{animation:orbspin 24s linear infinite}}
-@keyframes orbspin{to{transform:rotate(360deg)}}
-.orb-shine{position:absolute;inset:15%;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.45;
-  background:conic-gradient(from 0deg,transparent 0deg,rgba(255,238,200,.55) 40deg,transparent 90deg,transparent 360deg)}
+.orb-disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  -webkit-mask:radial-gradient(circle at 50% 50%,#000 70%,rgba(0,0,0,.7) 86%,transparent 99%);
+          mask:radial-gradient(circle at 50% 50%,#000 70%,rgba(0,0,0,.7) 86%,transparent 99%)}
+.orb-vid,.orb-poster{position:absolute;width:132%;height:132%;left:-16%;top:-16%;object-fit:cover;display:block}
+.orb-vid{z-index:1}.orb-poster{z-index:0}
+@media(prefers-reduced-motion:reduce){.orb-vid{display:none}}
+.orb-shine{position:absolute;inset:15%;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.4;z-index:2;
+  background:conic-gradient(from 0deg,transparent 0deg,rgba(255,238,200,.5) 40deg,transparent 90deg,transparent 360deg)}
 @media(prefers-reduced-motion:no-preference){.orb-shine{animation:spin 9s linear infinite}}
 @keyframes spin{to{transform:rotate(360deg)}}
-.orb-disc.noimg .orb-img{display:none}
+.orb-disc.noimg .orb-vid,.orb-disc.noimg .orb-poster{display:none}
 .orb-disc.noimg::after{content:"";position:absolute;inset:14%;border-radius:50%;
   background:radial-gradient(circle at 38% 32%,#fdf3d6,#e9c463 26%,#1f335c 70%,#0e1b33 100%);
   box-shadow:0 0 50px rgba(14,27,51,.4)}
@@ -336,6 +337,21 @@ html.cine-on .shint{display:inline-flex;align-items:center;gap:7px;position:abso
 .spark.s3{left:51%;bottom:55%;animation-delay:1.8s}.spark.s4{left:58%;bottom:52%;animation-delay:2.7s}
 @keyframes sparkrise{0%{opacity:0;transform:translateY(0) scale(.5)}22%{opacity:1}100%{opacity:0;transform:translateY(-78px) scale(1.05)}}
 
+/* line icons (≈1.5px stroke, currentColor → gold) */
+svg.icn{width:1.15em;height:1.15em;flex:none;vertical-align:-.18em;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;color:var(--gold)}
+.ico svg.icn{width:26px;height:26px}
+.pi svg.icn{width:21px;height:21px}
+.trust svg.icn{width:18px;height:18px}
+.free svg.icn{width:17px;height:17px}
+.lab svg.icn{width:15px;height:15px}
+.link svg.icn{width:17px;height:17px;color:inherit}
+.done svg.icn{width:19px;height:19px;color:inherit}
+.ck svg.icn{width:12px;height:12px;color:inherit;stroke-width:2}
+/* why photo (real lesson moment) */
+.whyphoto{margin:0;border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--sh-lg);aspect-ratio:4/3}
+.whyphoto img{width:100%;height:100%;object-fit:cover;display:block}
+@media(prefers-reduced-motion:no-preference){.whyphoto img{transition:transform .6s cubic-bezier(.22,1,.36,1)}.whyphoto:hover img{transform:scale(1.04)}}
+
 /* examples */
 .grid4{display:grid;gap:16px;margin-top:40px;grid-template-columns:1fr 1fr}
 @media(min-width:900px){.grid4{grid-template-columns:repeat(4,1fr)}}
@@ -410,6 +426,23 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
 </style></head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1" vector-effect="non-scaling-stroke"/><path d="M5 12v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8" vector-effect="non-scaling-stroke"/><path d="M12 8v13" vector-effect="non-scaling-stroke"/><path d="M12 8S10.5 3 8 3 5 7.5 9 8" vector-effect="non-scaling-stroke"/><path d="M12 8s1.5-5 4-5 3 4.5-1 5" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="7.5" r="3.2" vector-effect="non-scaling-stroke"/><path d="M2.8 20a6.2 6.2 0 0 1 12.4 0" vector-effect="non-scaling-stroke"/><path d="M16 4.6a3.1 3.1 0 0 1 0 6.2" vector-effect="non-scaling-stroke"/><path d="M17.4 14.2A6.2 6.2 0 0 1 21.4 20" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" vector-effect="non-scaling-stroke"/><path d="M12 7v5.2l3.4 2.1" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C9.8 5 6.6 4.6 4 5.2v13c2.6-.6 5.8-.2 8 1.3" vector-effect="non-scaling-stroke"/><path d="M12 6.5C14.2 5 17.4 4.6 20 5.2v13c-2.6-.6-5.8-.2-8 1.3" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2.2" vector-effect="non-scaling-stroke"/><path d="M3.5 9.5h17M8 3v4M16 3v4" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M19.5 4.5H4.5a2 2 0 0 0-2 2V15a2 2 0 0 0 2 2H8v3.3L12 17h7.5a2 2 0 0 0 2-2V6.5a2 2 0 0 0-2-2z" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><path d="M3 16.5l5.5-5.5 3.5 3 7-7.5" vector-effect="non-scaling-stroke"/><path d="M15.5 6.5h4.5v4.5" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="8.5" width="18" height="12" rx="2" vector-effect="non-scaling-stroke"/><path d="M3.4 8.5 6 4.6l3.3-.4-2.6 3.9M10.4 8.1 13 4.2l3.3-.4-2.6 3.9M17 7.8 19.6 4" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 3.5 20.5 7 17 10.5" vector-effect="non-scaling-stroke"/><path d="M20.5 7H8A4.5 4.5 0 0 0 3.5 11.5v.5" vector-effect="non-scaling-stroke"/><path d="M7 20.5 3.5 17 7 13.5" vector-effect="non-scaling-stroke"/><path d="M3.5 17H16a4.5 4.5 0 0 0 4.5-4.5v-.5" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-map" viewBox="0 0 24 24"><path d="M9 3.5 3.5 6v14.5L9 18l6 2.5 5.5-2.5V3.5L15 6 9 3.5z" vector-effect="non-scaling-stroke"/><path d="M9 3.5V18M15 6v14.5" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.2" vector-effect="non-scaling-stroke"/><path d="M3.8 6.5 12 12.5l8.2-6" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" vector-effect="non-scaling-stroke"/><circle cx="12" cy="12" r="4" vector-effect="non-scaling-stroke"/><circle cx="17" cy="7" r="1.2" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-8" vector-effect="non-scaling-stroke"/><path d="M12 14c0-3.3 2.7-6 6-6 0 3.3-2.7 6-6 6z" vector-effect="non-scaling-stroke"/><path d="M12 13.5c0-2.8-2.2-5-5-5 0 2.8 2.2 5 5 5z" vector-effect="non-scaling-stroke"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" vector-effect="non-scaling-stroke"/></symbol>
+</defs></svg>
+
 <div class="progress" aria-hidden="true"></div>
 <div class="aurora" aria-hidden="true"><b></b><b></b><b></b></div>
 <div class="particles" aria-hidden="true"></div>
@@ -440,17 +473,21 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
           <div class="wmark" aria-hidden="true">Genau</div>
 
           <div class="orbit-field" aria-hidden="true"><div class="orbit-rot">
-            <span class="lab a" style="--i:0">🎁 First lesson <b>free</b></span>
+            <span class="lab a" style="--i:0"><svg class="icn"><use href="#i-gift"></use></svg> First lesson <b>free</b></span>
             <span class="lab b" style="--i:1">Zero to <b>B1</b></span>
-            <span class="lab c" style="--i:2"><b>4.5</b> months</span>
-            <span class="lab d" style="--i:3">A1 → A2 → B1</span>
-            <span class="lab e" style="--i:4">1-on-1 + small group</span>
-            <span class="lab f" style="--i:5">★ Premium · library+videos</span>
+            <span class="lab c" style="--i:2">A1 → A2 → B1</span>
           </div></div>
 
           <div class="orbWrap" aria-hidden="true"><div class="orb">
             <span class="orb-glow"></span>
-            <span class="orb-disc"><img class="orb-img" src="orb.webp" alt="" loading="eager" decoding="async" onerror="this.closest('.orb-disc').classList.add('noimg')"><span class="orb-shine"></span></span>
+            <span class="orb-disc">
+              <img class="orb-poster" src="img/orb.jpg" alt="" loading="eager" decoding="async" onerror="this.closest('.orb-disc').classList.add('noimg')">
+              <video class="orb-vid" autoplay muted loop playsinline preload="auto" poster="img/orb.jpg" aria-hidden="true">
+                <source src="video/orb-loop.webm" type="video/webm">
+                <source src="video/orb-loop.mp4" type="video/mp4">
+              </video>
+              <span class="orb-shine"></span>
+            </span>
           </div></div>
 
           <div class="logo"><span class="wm">genau<i>·</i>german</span></div>
@@ -462,7 +499,7 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
               <a href="#offer" class="btn">Get your free first lesson</a>
               <a href="#journey" class="link">See the courses ↓</a>
             </div>
-            <p class="free">🎁 <b>First lesson completely free</b> — meet first, then decide.</p>
+            <p class="free"><svg class="icn"><use href="#i-gift"></use></svg> <b>First lesson completely free</b> — meet first, then decide.</p>
           </div>
 
           <span class="shint">scroll <span class="ar">↓</span></span>
@@ -473,10 +510,10 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
 
   <!-- TRUST STRIP -->
   <div class="wrap"><div class="trust rv">
-    <span>🎁 <b>First lesson free</b></span>
-    <span>👤 <b>1-on-1</b> + small group</span>
-    <span>⏱️ <b>B1 in 4.5 months</b></span>
-    <span>📚 <b>Premium</b> library + videos</span>
+    <span><svg class="icn"><use href="#i-gift"></use></svg> <b>First lesson free</b></span>
+    <span><svg class="icn"><use href="#i-users"></use></svg> <b>1-on-1</b> + small group</span>
+    <span><svg class="icn"><use href="#i-clock"></use></svg> <b>B1 in 4.5 months</b></span>
+    <span><svg class="icn"><use href="#i-book"></use></svg> <b>Premium</b> library + videos</span>
   </div></div>
 
   <!-- MARQUEE -->
@@ -489,9 +526,9 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
   <section id="how" class="sec wrap" style="scroll-margin-top:90px">
     <div class="shead rv"><p class="eyebrow">How it works</p><h2 class="h2" style="margin-top:10px">A clear system, no detours.</h2></div>
     <div class="grid3">
-      <article class="card rv"><div class="ico">🗓️</div><h3>Regular lessons + homework</h3><p>1-on-1 and small group. One clear step every week, no drifting.</p></article>
-      <article class="card rv"><div class="ico">💬</div><h3>Speak from day one</h3><p>At the shop, the café, the Bürgeramt — real sentences, not memorized lists.</p></article>
-      <article class="card rv"><div class="ico">📈</div><h3>Visible progress</h3><p>A1 → A2 → B1. Always know where you are and where you're going.</p></article>
+      <article class="card rv"><div class="ico"><svg class="icn"><use href="#i-calendar"></use></svg></div><h3>Regular lessons + homework</h3><p>1-on-1 and small group. One clear step every week, no drifting.</p></article>
+      <article class="card rv"><div class="ico"><svg class="icn"><use href="#i-chat"></use></svg></div><h3>Speak from day one</h3><p>At the shop, the café, the Bürgeramt — real sentences, not memorized lists.</p></article>
+      <article class="card rv"><div class="ico"><svg class="icn"><use href="#i-trend"></use></svg></div><h3>Visible progress</h3><p>A1 → A2 → B1. Always know where you are and where you're going.</p></article>
     </div>
   </section>
 
@@ -517,9 +554,9 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
         <p class="desc">Consistent progress. 1-on-1 + small group, Premium account included.</p>
         <div class="price">€155<small>/mo</small></div>
         <ul>
-          <li><span class="ck">✓</span>3 lessons a week (1-on-1 + group)</li>
-          <li><span class="ck">✓</span>Premium account (library + private videos)</li>
-          <li><span class="ck">✓</span>First lesson free · package discount</li>
+          <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span>3 lessons a week (1-on-1 + group)</li>
+          <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span>Premium account (library + private videos)</li>
+          <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span>First lesson free · package discount</li>
         </ul>
         <a href="mailto:genaugerman.contact@gmail.com?subject=Genau!%20-%203%20lessons%20a%20week" class="btn ghost">Get your free first lesson</a>
       </article>
@@ -530,10 +567,10 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
         <p class="desc">The pace we recommend for guaranteed B1. The fastest path — and lower per lesson.</p>
         <div class="price">€200<small>/mo</small></div>
         <ul>
-          <li><span class="ck">✓</span>4 lessons a week — the guarantee pace</li>
-          <li><span class="ck">✓</span>Premium account (all levels)</li>
-          <li><span class="ck">✓</span>Lower per lesson · first lesson free</li>
-          <li><span class="ck">✓</span>Zero to B1 in 4.5 months</li>
+          <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span>4 lessons a week — the guarantee pace</li>
+          <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span>Premium account (all levels)</li>
+          <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span>Lower per lesson · first lesson free</li>
+          <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span>Zero to B1 in 4.5 months</li>
         </ul>
         <a href="mailto:genaugerman.contact@gmail.com?subject=Genau!%20-%20B1%20guaranteed%20program" class="btn">Reserve your spot</a>
       </article>
@@ -564,10 +601,10 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
           <p class="eyebrow">Premium account</p>
           <h2 class="h2" style="margin-top:10px">What you unlock with Premium</h2>
           <ul class="plist">
-            <li><span class="pi">📚</span><span><b>Resource library.</b> <span class="t">PDFs, word lists, grammar summaries and worksheets for every level.</span></span></li>
-            <li><span class="pi">🎬</span><span><b>Private videos.</b> <span class="t">Students-only lesson and review videos, made for the class.</span></span></li>
-            <li><span class="pi">🔁</span><span><b>Unlimited replay.</b> <span class="t">Rewatch any topic as many times as you like, whenever you like.</span></span></li>
-            <li><span class="pi">🗺️</span><span><b>Sequential progress.</b> <span class="t">Follow the A1 → A2 → B1 roadmap step by step.</span></span></li>
+            <li><span class="pi"><svg class="icn"><use href="#i-book"></use></svg></span><span><b>Resource library.</b> <span class="t">PDFs, word lists, grammar summaries and worksheets for every level.</span></span></li>
+            <li><span class="pi"><svg class="icn"><use href="#i-film"></use></svg></span><span><b>Private videos.</b> <span class="t">Students-only lesson and review videos, made for the class.</span></span></li>
+            <li><span class="pi"><svg class="icn"><use href="#i-repeat"></use></svg></span><span><b>Unlimited replay.</b> <span class="t">Rewatch any topic as many times as you like, whenever you like.</span></span></li>
+            <li><span class="pi"><svg class="icn"><use href="#i-map"></use></svg></span><span><b>Sequential progress.</b> <span class="t">Follow the A1 → A2 → B1 roadmap step by step.</span></span></li>
           </ul>
         </div>
         <div class="bookwrap" aria-hidden="true">
@@ -598,9 +635,9 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
           <p class="eyebrow">Free download</p>
           <h2 class="h2" style="margin-top:10px">Bürgeramt Survival Script</h2>
           <ul>
-            <li><span class="ck">✓</span><span>A ready <b>4-line script</b> for your appointment</span></li>
-            <li><span class="ck">✓</span><span><b>The clerk's questions</b> + how to answer + form words</span></li>
-            <li><span class="ck">✓</span><span>One page · save to your phone · <b>100% free</b></span></li>
+            <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span><span>A ready <b>4-line script</b> for your appointment</span></li>
+            <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span><span><b>The clerk's questions</b> + how to answer + form words</span></li>
+            <li><span class="ck"><svg class="icn"><use href="#i-check"></use></svg></span><span>One page · save to your phone · <b>100% free</b></span></li>
           </ul>
           <div style="margin-top:26px;display:flex;flex-wrap:wrap;align-items:center;gap:14px">
             <a href="buergeramt-survival-script.pdf" download class="btn">Get the survival script →</a>
@@ -625,12 +662,15 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
           <p class="eyebrow">Why it works</p>
           <h2 class="h2" style="margin-top:10px">A few students, real attention.</h2>
           <p class="lead" style="margin-top:16px">Scattered resources and "someday" plans don't work. Genau! focuses on one clear line: A1 → A2 → B1, each 1.5 months. With 1-on-1 support, real speaking and premium resources, B1 in 4.5 months — structure, not pressure.</p>
+          <div class="stats" style="margin-top:26px;grid-template-columns:repeat(3,1fr)">
+            <div class="stat"><span class="v" data-count="3">3</span><span class="l">levels · A1 → A2 → B1</span></div>
+            <div class="stat"><span class="v" data-count="4.5">4.5</span><span class="l">months · zero to B1</span></div>
+            <div class="stat"><span class="v">B1</span><span class="l">residence · work · exams</span></div>
+          </div>
         </div>
-        <div class="stats">
-          <div class="stat"><span class="v" data-count="3">3</span><span class="l">levels · A1 → A2 → B1</span></div>
-          <div class="stat"><span class="v" data-count="4.5">4.5</span><span class="l">months from zero to B1</span></div>
-          <div class="stat"><span class="v">B1</span><span class="l">residence · work · exams</span></div>
-        </div>
+        <figure class="whyphoto">
+          <img src="img/teacher.jpg" alt="A relaxed one-on-one German lesson over coffee" loading="lazy" decoding="async">
+        </figure>
       </div>
     </div>
   </section>
@@ -646,15 +686,15 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
           <input id="em" type="email" required placeholder="you@email.com" autocomplete="email">
           <button type="submit" class="btn">Sign me up</button>
         </form>
-        <p class="done" id="nld"><span>🌱</span> Thanks! The list opens very soon — you'll be the first to know.</p>
+        <p class="done" id="nld"><svg class="icn"><use href="#i-sprout"></use></svg> Thanks! The list opens very soon — you'll be the first to know.</p>
         <p class="cs">No spam. Just one scene a day.</p>
       </div>
     </div>
     <div class="foot">
       <div class="fb"><span class="gbox">G</span><div><p class="n">Genau!</p><p class="t">Zero to B1 — survive the room, with confidence.</p></div></div>
       <div class="fl">
-        <a href="mailto:genaugerman.contact@gmail.com" class="link">✉️ genaugerman.contact@gmail.com</a>
-        <a href="https://instagram.com/genaugerman" target="_blank" rel="noopener" class="link">📸 @genaugerman</a>
+        <a href="mailto:genaugerman.contact@gmail.com" class="link"><svg class="icn"><use href="#i-mail"></use></svg> genaugerman.contact@gmail.com</a>
+        <a href="https://instagram.com/genaugerman" target="_blank" rel="noopener" class="link"><svg class="icn"><use href="#i-instagram"></use></svg> @genaugerman</a>
       </div>
     </div>
   </section>
