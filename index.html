@@ -119,7 +119,7 @@ html.cine-on .cine-track{height:255vh}
 @media(max-width:640px){html.cine-on .cine-track{height:215vh}}
 html.cine-on .stage{position:sticky;top:0;height:100vh;min-height:0}
 html.cine-on .stage-in{position:absolute;inset:0;display:block;min-height:0;padding:0;max-width:none;
-  transform:translateY(calc(-7vh*var(--exit,0)));opacity:calc(1 - .45*var(--exit,0))}
+  transform:translateY(calc(-4vh*var(--exit,0)))}
 
 /* watermark */
 .wmark{display:none;font-family:var(--disp);font-weight:800;letter-spacing:-.05em;line-height:1;
@@ -193,8 +193,8 @@ html.cine-on .orb{width:min(48vmin,392px);animation:none;transform:scale(calc(.2
 /* wordmark */
 .logo{position:relative;pointer-events:none}
 html.cine-on .logo{position:absolute;inset:0;display:grid;place-items:center;
-  transform:translateY(calc(-6vh - 3vh*var(--copy,0))) scale(calc(.86 + .14*var(--word,0)));
-  opacity:var(--word,0);will-change:transform,opacity}
+  transform:translateY(calc(-4vh - 13vh*var(--copy,0))) scale(calc(.84 + .16*var(--word,0) - .28*var(--copy,0)));
+  opacity:calc(var(--word,0) - var(--copy,0));will-change:transform,opacity}
 .wm{font-family:var(--disp);font-weight:700;letter-spacing:-.035em;line-height:1;
   font-size:clamp(2.5rem,8.4vw,5.6rem);
   background:linear-gradient(96deg,var(--navy),#3a4f7a 38%,var(--gold-bright) 86%);
@@ -204,7 +204,7 @@ html.cine-on .logo{position:absolute;inset:0;display:grid;place-items:center;
 /* hero copy */
 .hero-copy{position:relative;width:min(680px,92vw);margin:0 auto}
 html.cine-on .hero-copy{position:absolute;inset:0;display:grid;place-items:center;align-content:center;
-  transform:translateY(calc(11vh + 14px*(1 - var(--copy,0))));opacity:var(--copy,0);will-change:transform,opacity}
+  transform:translateY(calc(7vh*(1 - var(--copy,0))));opacity:var(--copy,0);will-change:transform,opacity}
 .hero-copy h1{font-size:clamp(1.9rem,4.4vw,2.9rem);letter-spacing:-.025em;margin:0 auto}
 .hero-copy h1 .hl{color:var(--gold)}
 .hero-copy .sub{margin-top:16px;font-size:clamp(15px,2.4vw,18px);color:var(--muted);max-width:50ch;margin-inline:auto}
