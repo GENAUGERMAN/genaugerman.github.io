@@ -33,7 +33,7 @@ body{font-family:var(--sans);color:var(--ink);background:var(--bg);overflow-x:hi
 a{color:inherit}
 h1,h2,h3{font-family:var(--disp);font-weight:700;letter-spacing:-.02em;line-height:1.12}
 .eyebrow{font-family:var(--sans);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
-.h2{font-size:clamp(1.9rem,4vw,2.7rem)}
+.h2{font-size:clamp(2.1rem,4.8vw,3.2rem);letter-spacing:-.025em}
 .lead{font-size:18px;line-height:1.6;color:var(--muted)}
 .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:7px 16px;font-weight:600;font-size:14px;color:var(--ink);box-shadow:var(--sh)}
 .btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--sans);font-weight:700;font-size:15px;color:#fff;background:var(--navy);border:0;border-radius:999px;padding:14px 26px;text-decoration:none;cursor:pointer;box-shadow:var(--sh);transition:transform .18s,background .18s,box-shadow .18s}
@@ -104,100 +104,126 @@ nav{max-width:1140px;margin:14px auto 0;display:flex;align-items:center;justify-
 .nlinks a:hover{color:var(--navy)}
 .nlinks a:hover::after{transform:scaleX(1)}
 
-/* ===== CINEMATIC HERO (sticky pin + GSAP scrub on --exit) ===== */
+/* ===== ARC-REACTOR HERO (orb god-center + Tesla ignition + scrub morph --p) ===== */
 .cine{position:relative}
 .cine-track{position:relative}
 .stage{position:relative;min-height:100svh;overflow:hidden;isolation:isolate;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,3.4vh,34px);
-  text-align:center;padding:118px 22px 64px}
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(20px,4vh,40px);
+  text-align:center;padding:104px 18px 60px}
 .stage::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:
-  radial-gradient(58% 46% at 50% 40%, rgba(242,193,78,.22), transparent 70%),
-  radial-gradient(70% 60% at 50% 64%, rgba(14,27,51,.06), transparent 74%)}
-html.cine-on .cine-track{height:230vh}
-html.cine-on .stage{position:sticky;top:0;height:100vh;min-height:0}
+  radial-gradient(44% 38% at 50% 46%, rgba(242,193,78,.28), transparent 70%),
+  radial-gradient(82% 72% at 50% 58%, rgba(14,27,51,.08), transparent 76%)}
+html.cine-on .cine-track{height:260vh}
+html.cine-on .stage{position:sticky;top:0;height:100svh;min-height:0;display:grid;place-items:center;padding:0}
+html.cine-on .stage>*{grid-area:1/1}
 
-.cream-wash{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:calc(max(0,(var(--exit,0) - .4))*1.7);
-  background:radial-gradient(120% 95% at 50% 38%,#ffffff 0%,var(--bg) 72%)}
-.cursor-glow{position:fixed;left:0;top:0;width:540px;height:540px;margin:-270px 0 0 -270px;border-radius:50%;
+.cursor-glow{position:fixed;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;
   z-index:0;pointer-events:none;opacity:0;will-change:transform,opacity;
-  background:radial-gradient(circle,rgba(242,193,78,.20),rgba(14,27,51,.05) 42%,transparent 68%)}
+  background:radial-gradient(circle,rgba(242,193,78,.22),rgba(14,27,51,.05) 42%,transparent 68%)}
 
 .wmark{position:absolute;inset:0;display:grid;place-items:center;margin:0;z-index:-1;
   font-family:var(--disp);font-weight:800;letter-spacing:-.05em;line-height:1;
-  color:var(--navy);opacity:calc(.055*(1 - var(--exit,0)));white-space:nowrap;user-select:none;pointer-events:none;
+  color:var(--navy);opacity:calc(.055*(1 - var(--p,0)));white-space:nowrap;user-select:none;pointer-events:none;
   font-size:clamp(5.4rem,24vw,21rem)}
 
-.orbcluster{position:relative;width:min(86vw,470px);aspect-ratio:1;max-height:50vh;display:grid;place-items:center;
-  perspective:1100px;z-index:2;will-change:transform}
-.orings{position:absolute;inset:0;display:grid;place-items:center;transform-style:preserve-3d;
-  transform:scale(calc(1 + .9*var(--exit,0)));opacity:calc(1 - var(--exit,0));will-change:transform,opacity}
+/* the reactor */
+.orbStage{position:relative;width:min(94vw,560px);aspect-ratio:1;display:grid;place-items:center;z-index:2;perspective:1200px}
+@media(prefers-reduced-motion:no-preference){.orbStage{animation:floaty 7.5s ease-in-out infinite}}
+@keyframes floaty{0%,100%{transform:translateY(-9px)}50%{transform:translateY(9px)}}
+html.cine-on .orbStage{transform:scale(calc(1 - .06*var(--p,0)))}
+
+.orings{position:absolute;inset:0;display:grid;place-items:center;transform-style:preserve-3d;opacity:calc(1 - var(--p,0));will-change:opacity}
 .oring{position:absolute;border-radius:50%;border:1.5px solid var(--gold-bright);transform-style:preserve-3d}
-.oring.r1{width:74%;height:74%;border-color:rgba(242,193,78,.55)}
-.oring.r2{width:94%;height:94%;border-color:rgba(14,27,51,.22)}
-.oring.r3{width:114%;height:114%;border-color:rgba(242,193,78,.28)}
-.oring i{position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;
+.oring.r1{width:66%;height:66%;border-color:rgba(242,193,78,.55)}
+.oring.r2{width:84%;height:84%;border-color:rgba(14,27,51,.22)}
+.oring.r3{width:102%;height:102%;border-color:rgba(242,193,78,.28)}
+.oring i{position:absolute;top:-4px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;
   background:radial-gradient(circle,#fff6df,rgba(242,193,78,.85) 55%,transparent 72%);box-shadow:0 0 12px rgba(242,193,78,1)}
 @media(prefers-reduced-motion:no-preference){
-  .oring.r1{animation:orbit1 26s linear infinite}
-  .oring.r2{animation:orbit2 40s linear infinite}
-  .oring.r3{animation:orbit3 32s linear infinite}}
-@keyframes orbit1{from{transform:rotateX(70deg) rotateZ(0)}to{transform:rotateX(70deg) rotateZ(360deg)}}
-@keyframes orbit2{from{transform:rotateX(62deg) rotateY(16deg) rotateZ(360deg)}to{transform:rotateX(62deg) rotateY(16deg) rotateZ(0)}}
-@keyframes orbit3{from{transform:rotateX(80deg) rotateZ(0)}to{transform:rotateX(80deg) rotateZ(360deg)}}
+  .oring.r1{animation:orbit1 24s linear infinite}.oring.r2{animation:orbit2 38s linear infinite}.oring.r3{animation:orbit3 30s linear infinite}}
+@keyframes orbit1{from{transform:rotateX(72deg) rotateZ(0)}to{transform:rotateX(72deg) rotateZ(360deg)}}
+@keyframes orbit2{from{transform:rotateX(64deg) rotateY(18deg) rotateZ(360deg)}to{transform:rotateX(64deg) rotateY(18deg) rotateZ(0)}}
+@keyframes orbit3{from{transform:rotateX(82deg) rotateZ(0)}to{transform:rotateX(82deg) rotateZ(360deg)}}
 
-/* orb */
-.orb{position:relative;width:62%;aspect-ratio:1;z-index:2;will-change:transform,opacity}
-html.cine-on .orb{transform:scale(calc(1 + .22*var(--exit,0)));opacity:calc(1 - .85*var(--exit,0))}
-.orb-glow{position:absolute;inset:-16%;border-radius:50%;z-index:-1;
-  background:radial-gradient(circle,rgba(242,193,78,.42),rgba(14,27,51,.10) 48%,transparent 72%)}
-@media(prefers-reduced-motion:no-preference){.orb-glow{animation:pulse 7.5s ease-in-out infinite}}
-@keyframes pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+/* orb — centered, dominant, tangible */
+.orb{position:relative;width:47%;aspect-ratio:1;z-index:3;will-change:transform,opacity;
+  transform:scale(calc(1 - .16*clamp(0,(var(--p,0) - .35)/.4,1)));opacity:calc(1 - .9*clamp(0,(var(--p,0) - .42)/.34,1))}
+.orb-contact{position:absolute;left:50%;bottom:-9%;width:58%;height:9%;transform:translateX(-50%);border-radius:50%;z-index:-2;
+  background:radial-gradient(50% 50% at 50% 50%,rgba(14,27,51,.34),transparent 72%);filter:blur(7px)}
+.orb-glow{position:absolute;inset:-24%;border-radius:50%;z-index:-1;
+  background:radial-gradient(circle,rgba(242,193,78,.5),rgba(14,27,51,.12) 46%,transparent 72%)}
+@media(prefers-reduced-motion:no-preference){.orb-glow{animation:pulse 6.5s ease-in-out infinite}}
+@keyframes pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
 .orb-disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;
-  -webkit-mask:radial-gradient(circle at 50% 50%,#000 70%,rgba(0,0,0,.7) 86%,transparent 99%);
-          mask:radial-gradient(circle at 50% 50%,#000 70%,rgba(0,0,0,.7) 86%,transparent 99%)}
-.orb-vid,.orb-poster{position:absolute;width:132%;height:132%;left:-16%;top:-16%;object-fit:cover;display:block}
+  box-shadow:inset 0 -10px 26px rgba(14,27,51,.34),inset 0 8px 22px rgba(255,250,240,.4),0 24px 54px -16px rgba(14,27,51,.5);
+  -webkit-mask:radial-gradient(circle at 50% 50%,#000 73%,rgba(0,0,0,.8) 88%,transparent 99%);
+          mask:radial-gradient(circle at 50% 50%,#000 73%,rgba(0,0,0,.8) 88%,transparent 99%)}
+.orb-vid,.orb-poster{position:absolute;width:130%;height:130%;left:-15%;top:-15%;object-fit:cover;display:block}
 .orb-vid{z-index:1}.orb-poster{z-index:0}
 @media(prefers-reduced-motion:reduce){.orb-vid{display:none}}
-.orb-shine{position:absolute;inset:14%;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.4;z-index:2;
-  background:conic-gradient(from 0deg,transparent 0deg,rgba(255,238,200,.5) 40deg,transparent 90deg,transparent 360deg)}
-@media(prefers-reduced-motion:no-preference){.orb-shine{animation:spin 10s linear infinite}}
+.orb-rim{position:absolute;inset:0;border-radius:50%;pointer-events:none;z-index:3;mix-blend-mode:screen;
+  background:radial-gradient(circle at 50% 50%,transparent 74%,rgba(255,250,240,.55) 85%,rgba(255,250,240,0) 93%)}
+.orb-spec{position:absolute;top:9%;left:15%;width:36%;height:26%;border-radius:50%;pointer-events:none;z-index:4;transform:rotate(-18deg);
+  background:radial-gradient(circle at 40% 40%,rgba(255,255,255,.85),rgba(255,255,255,0) 68%);filter:blur(1px)}
+.orb-shine{position:absolute;inset:12%;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.4;z-index:2;
+  background:conic-gradient(from 0deg,transparent 0deg,rgba(255,238,200,.55) 40deg,transparent 90deg,transparent 360deg)}
+@media(prefers-reduced-motion:no-preference){.orb-shine{animation:spin 11s linear infinite}}
 @keyframes spin{to{transform:rotate(360deg)}}
 .orb-disc.noimg .orb-vid,.orb-disc.noimg .orb-poster{display:none}
-.orb-disc.noimg::after{content:"";position:absolute;inset:8%;border-radius:50%;
-  background:radial-gradient(circle at 38% 32%,#fdf3d6,#e9c463 26%,#1f335c 70%,#0e1b33 100%);box-shadow:0 0 50px rgba(14,27,51,.4)}
+.orb-disc.noimg::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,#fdf3d6,#e9c463 26%,#1f335c 70%,#0e1b33 100%)}
 
-/* chips (orbit labels) */
-.chips{position:absolute;inset:0;z-index:4;transform-origin:50% 46%;
-  transform:scale(calc(1 + .55*var(--exit,0)));opacity:calc(1 - var(--exit,0));will-change:transform,opacity}
+/* electricity (Tesla) */
+.tesla{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:visible;opacity:calc(1 - clamp(0,var(--p,0)/.32,1))}
+.tesla .tbolt{fill:none;stroke:#fff;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;
+  filter:drop-shadow(0 0 5px rgba(242,193,78,1)) drop-shadow(0 0 11px rgba(242,201,120,.85))}
+@keyframes tdraw{from{stroke-dashoffset:var(--len,200)}to{stroke-dashoffset:0}}
+@keyframes tfade{to{opacity:0}}
+
+/* chip ring (info AROUND the orb) */
+.chips{position:absolute;inset:0;z-index:6;opacity:calc(1 - clamp(0,var(--p,0)/.4,1));
+  transform:scale(calc(1 - .5*clamp(0,var(--p,0)/.45,1)));transform-origin:50% 50%;will-change:transform,opacity}
 .lab{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:7px;
-  white-space:nowrap;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:999px;
-  padding:9px 14px;font-family:var(--disp);font-weight:700;font-size:clamp(11px,2.5vw,15px);
-  color:var(--ink);box-shadow:0 14px 30px -16px rgba(14,27,51,.45)}
+  white-space:nowrap;background:rgba(255,255,255,.97);border:1px solid var(--line);border-radius:999px;
+  padding:8px 14px;font-family:var(--disp);font-weight:700;font-size:clamp(10.5px,1.45vw,14.5px);
+  color:var(--ink);box-shadow:0 14px 30px -16px rgba(14,27,51,.45);opacity:0;transition:opacity .45s ease}
 .lab b{color:var(--gold)}
-.lab::before{content:"";position:absolute;inset:-2.5px;border-radius:999px;padding:2.5px;pointer-events:none;z-index:2;
-  background:conic-gradient(from var(--beam,0deg),transparent 0 50%,rgba(242,201,120,.8) 64%,#fff 76%,var(--navy) 84%,rgba(242,201,120,.65) 92%,transparent 99%);
+.lab.lit{opacity:1}
+.lab.lit::before{content:"";position:absolute;inset:-2.5px;border-radius:999px;padding:2.5px;pointer-events:none;z-index:2;
+  background:conic-gradient(from var(--beam,0deg),transparent 0 52%,rgba(242,201,120,.85) 66%,#fff 78%,var(--navy) 86%,rgba(242,201,120,.6) 94%,transparent 99%);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
   filter:drop-shadow(0 0 6px rgba(242,201,120,.8))}
-@media(prefers-reduced-motion:no-preference){.lab::before{animation:beam 3s linear infinite}
-  .lab.b::before{animation-delay:-1s}.lab.c::before{animation-delay:-2s}}
+@media(prefers-reduced-motion:no-preference){.lab.lit::before{animation:beam 3s linear infinite}}
 @keyframes beam{to{--beam:360deg}}
-.lab.a{left:7%;top:23%}.lab.b{left:93%;top:29%}.lab.c{left:50%;top:92%}
-@media(min-width:760px){.lab{padding:11px 19px;font-size:15px}.lab.a{left:1%;top:22%}.lab.b{left:99%;top:27%}.lab.c{left:50%;top:94%}}
+.lab.a{left:24%;top:21%}.lab.b{left:76%;top:21%}.lab.c{left:91%;top:50%}
+.lab.d{left:73%;top:80%}.lab.e{left:27%;top:80%}.lab.f{left:9%;top:50%}
+@media(max-width:760px){.chips{display:none}}
 
-/* hero copy */
-.hero-copy{position:relative;z-index:5;width:min(680px,92vw);margin:0 auto;
-  opacity:calc(1 - var(--exit,0));transform:translateY(calc(-3vh*var(--exit,0)));will-change:transform,opacity}
-.hero-copy h1{font-size:clamp(1.9rem,4.6vw,3rem);letter-spacing:-.025em;margin:0 auto}
+/* wordmark forms from the orb (mid-scroll) */
+.logo{display:none}
+html.cine-on .logo{display:grid;place-items:center;position:absolute;inset:0;z-index:5;pointer-events:none;
+  opacity:calc(clamp(0,(var(--p,0) - .42)/.3,1) - clamp(0,(var(--p,0) - .8)/.2,1));
+  transform:translateY(calc(-12vh*clamp(0,(var(--p,0) - .8)/.2,1))) scale(calc(.82 + .18*clamp(0,(var(--p,0) - .42)/.3,1) - .24*clamp(0,(var(--p,0) - .8)/.2,1)));will-change:transform,opacity}
+.wm{font-family:var(--disp);font-weight:700;letter-spacing:-.035em;line-height:1;font-size:clamp(2.6rem,9vw,6rem);
+  background:linear-gradient(96deg,var(--navy),#3a4f7a 38%,var(--gold-bright) 86%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.wm i{font-style:normal;color:var(--gold-bright);-webkit-text-fill-color:var(--gold-bright);padding:0 .04em}
+
+/* hero copy — mobile: flow & visible; desktop: revealed at end of scrub */
+.hero-copy{position:relative;z-index:5;width:min(720px,92vw);margin:0 auto}
+html.cine-on .hero-copy{position:absolute;inset:0;display:grid;place-items:center;align-content:center;
+  opacity:clamp(0,(var(--p,0) - .8)/.2,1);transform:translateY(calc(6vh*(1 - clamp(0,(var(--p,0) - .8)/.2,1))));will-change:transform,opacity}
+.hero-copy h1{font-size:clamp(2.3rem,5.6vw,4rem);letter-spacing:-.03em;line-height:1.05;margin:0 auto}
 .hero-copy h1 .hl{color:var(--gold)}
-.hero-copy .sub{margin-top:14px;font-size:clamp(15px,2.4vw,18px);color:var(--muted);max-width:50ch;margin-inline:auto}
-.hero-copy .cta{margin-top:22px;display:flex;flex-wrap:wrap;gap:13px;justify-content:center}
+.hero-copy .sub{margin-top:16px;font-size:clamp(15.5px,2.2vw,19px);color:var(--muted);max-width:48ch;margin-inline:auto}
+.hero-copy .cta{margin-top:24px;display:flex;flex-wrap:wrap;gap:13px;justify-content:center}
 .hero-copy .free{margin-top:14px;font-weight:600;font-size:14px;color:var(--muted);display:inline-flex;align-items:center;gap:7px;justify-content:center}
 .hero-copy .free b{color:var(--navy)}
 
 /* scroll hint */
-.shint{display:inline-flex;align-items:center;gap:7px;position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
+.shint{display:inline-flex;align-items:center;gap:7px;position:absolute;left:50%;bottom:20px;transform:translateX(-50%);
   font-family:var(--disp);font-weight:600;font-size:12.5px;letter-spacing:.05em;color:var(--muted);
-  opacity:calc(1 - 2.4*var(--exit,0));pointer-events:none;z-index:5}
+  opacity:calc(1 - 3*var(--p,0));pointer-events:none;z-index:6}
 .shint .ar{display:inline-block}
 @media(prefers-reduced-motion:no-preference){.shint .ar{animation:bob 1.7s ease-in-out infinite}}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
@@ -444,51 +470,56 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
 
 <main id="top">
 
-  <!-- CINEMATIC HERO -->
+  <!-- ARC-REACTOR HERO -->
   <section class="cine" aria-label="Genau! — zero to B1 German">
     <div class="cine-track">
       <div class="stage">
-        <span class="cream-wash" aria-hidden="true"></span>
-        <div class="stage-in">
+        <div class="wmark" aria-hidden="true">Genau</div>
 
-          <div class="wmark" aria-hidden="true">Genau</div>
-
-          <div class="orbcluster" aria-hidden="true">
-            <div class="orings">
-              <span class="oring r1"><i></i></span>
-              <span class="oring r2"><i></i></span>
-              <span class="oring r3"><i></i></span>
-            </div>
-            <div class="orb">
-              <span class="orb-glow"></span>
-              <span class="orb-disc">
-                <img class="orb-poster" src="img/orb.jpg" alt="" loading="eager" decoding="async" onerror="this.closest('.orb-disc').classList.add('noimg')">
-                <video class="orb-vid" autoplay muted loop playsinline preload="auto" poster="img/orb.jpg" aria-hidden="true">
-                  <source src="video/orb-loop.webm" type="video/webm">
-                  <source src="video/orb-loop.mp4" type="video/mp4">
-                </video>
-                <span class="orb-shine"></span>
-              </span>
-            </div>
-            <div class="chips">
-              <span class="lab a"><svg class="icn"><use href="#i-gift"></use></svg> First lesson <b>free</b></span>
-              <span class="lab b">Zero to <b>B1</b></span>
-              <span class="lab c">A1 → A2 → B1</span>
-            </div>
+        <div class="orbStage" aria-hidden="true">
+          <div class="orings">
+            <span class="oring r1"><i></i></span>
+            <span class="oring r2"><i></i></span>
+            <span class="oring r3"><i></i></span>
           </div>
-
-          <div class="hero-copy">
-            <h1>Zero to <span class="hl">B1</span> German in 4.5 months.</h1>
-            <p class="sub">Private-lesson quality, 1-on-1 plus small group. 3 levels: A1 → A2 → B1, each 1.5 months. Get ready to live, work and pass exams in Germany.</p>
-            <div class="cta">
-              <a href="#offer" class="btn">Get your free first lesson</a>
-              <a href="#journey" class="link">See the courses ↓</a>
-            </div>
-            <p class="free"><svg class="icn"><use href="#i-gift"></use></svg> <b>First lesson completely free</b> — meet first, then decide.</p>
+          <div class="orb">
+            <span class="orb-contact"></span>
+            <span class="orb-glow"></span>
+            <span class="orb-disc">
+              <img class="orb-poster" src="img/orb.jpg" alt="" loading="eager" decoding="async" onerror="this.closest('.orb-disc').classList.add('noimg')">
+              <video class="orb-vid" autoplay muted loop playsinline preload="auto" poster="img/orb.jpg" aria-hidden="true">
+                <source src="video/orb-loop.webm" type="video/webm">
+                <source src="video/orb-loop.mp4" type="video/mp4">
+              </video>
+              <span class="orb-shine"></span>
+            </span>
+            <span class="orb-rim"></span>
+            <span class="orb-spec"></span>
           </div>
-
-          <span class="shint">scroll <span class="ar">↓</span></span>
+          <svg class="tesla" aria-hidden="true"></svg>
+          <div class="chips">
+            <span class="lab a"><svg class="icn"><use href="#i-gift"></use></svg> First lesson <b>free</b></span>
+            <span class="lab b">Zero to <b>B1</b></span>
+            <span class="lab c">A1 → A2 → B1</span>
+            <span class="lab d">Premium library + videos</span>
+            <span class="lab e">1-on-1 + small group</span>
+            <span class="lab f"><b>4.5</b> months to B1</span>
+          </div>
         </div>
+
+        <div class="logo" aria-hidden="true"><span class="wm">genau<i>·</i>german</span></div>
+
+        <div class="hero-copy">
+          <h1>Zero to <span class="hl">B1</span> German in <span class="hl">4.5 months</span>.</h1>
+          <p class="sub">Private-lesson quality, 1-on-1 plus small group. 3 levels: A1 → A2 → B1, each 1.5 months. Get ready to live, work and pass exams in Germany.</p>
+          <div class="cta">
+            <a href="#offer" class="btn">Get your free first lesson</a>
+            <a href="#journey" class="link">See the courses ↓</a>
+          </div>
+          <p class="free"><svg class="icn"><use href="#i-gift"></use></svg> <b>First lesson completely free</b> — meet first, then decide.</p>
+        </div>
+
+        <span class="shint">scroll <span class="ar">↓</span></span>
       </div>
     </div>
   </section>
@@ -716,13 +747,34 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
   if(nf)nf.addEventListener('submit',function(e){e.preventDefault();nf.style.display='none';var d=document.getElementById('nld');if(d)d.style.display='inline-flex';});
 
   /* reduced motion → static, content fully visible */
-  if(reduce){showAll();staticStats();return;}
+  if(reduce){showAll();staticStats();document.querySelectorAll('.lab').forEach(function(l){l.classList.add('lit');});return;}
 
   document.addEventListener('DOMContentLoaded',function(){
     var GS=window.gsap, ST=window.ScrollTrigger;
-    if(!GS||!ST){showAll();staticStats();return;}
+    if(!GS||!ST){showAll();staticStats();document.querySelectorAll('.lab').forEach(function(l){l.classList.add('lit');});return;}
     try{
       GS.registerPlugin(ST);
+
+      /* Tesla electricity: ignite chips left→right + idle crackle */
+      function tesla(){
+        var svg=document.querySelector('.tesla'),box=document.querySelector('.orbStage'),orb=document.querySelector('.orb');
+        var labs=Array.prototype.slice.call(document.querySelectorAll('.lab'));
+        if(!svg||!box||!orb||!labs.length){labs.forEach(function(l){l.classList.add('lit');});return;}
+        var NS='http://www.w3.org/2000/svg';
+        function R(el){return el.getBoundingClientRect();}
+        function vb(){var r=R(box);svg.setAttribute('viewBox','0 0 '+r.width+' '+r.height);svg.setAttribute('preserveAspectRatio','none');return r;}
+        function ctr(el,r){var b=R(el);return[b.left+b.width/2-r.left,b.top+b.height/2-r.top];}
+        function jag(x1,y1,x2,y2){var dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy)||1,nx=-dy/L,ny=dx/L,n=7,p=[];
+          for(var k=0;k<=n;k++){var t=k/n,px=x1+dx*t,py=y1+dy*t,j=(k===0||k===n)?0:(Math.random()-.5)*Math.min(30,L*.17);p.push((px+nx*j).toFixed(1)+','+(py+ny*j).toFixed(1));}return p.join(' ');}
+        function bolt(x1,y1,x2,y2,dur,delay){var pl=document.createElementNS(NS,'polyline');pl.setAttribute('points',jag(x1,y1,x2,y2));pl.setAttribute('class','tbolt');svg.appendChild(pl);
+          var len=pl.getTotalLength?pl.getTotalLength():320;pl.style.setProperty('--len',len);pl.style.strokeDasharray=len;pl.style.strokeDashoffset=len;
+          pl.style.animation='tdraw '+dur+'s ease '+delay+'s both, tfade .55s ease '+(delay+dur)+'s forwards';
+          setTimeout(function(){if(pl.parentNode)pl.parentNode.removeChild(pl);},(delay+dur+0.7)*1000);}
+        var r=vb(),oc=ctr(orb,r);
+        var ordered=labs.slice().sort(function(a,b){return R(a).left-R(b).left;});
+        ordered.forEach(function(lab,i){var lc=ctr(lab,r);var d=i*0.2;bolt(oc[0],oc[1],lc[0],lc[1],0.34,d);setTimeout(function(){lab.classList.add('lit');},(d+0.18)*1000);});
+        (function loop(){var wait=1200+Math.random()*1700;setTimeout(function(){if(!document.hidden){var r2=vb(),o2=ctr(orb,r2),lab=labs[Math.floor(Math.random()*labs.length)],lc=ctr(lab,r2);bolt(o2[0],o2[1],lc[0],lc[1],0.3,0);}loop();},wait);})();
+      }
 
       if(DESK && window.Lenis){
         h.style.scrollBehavior='auto';
@@ -741,14 +793,16 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
       var stage=document.querySelector('.stage');
       if(stage && !MOBILE){
         h.classList.add('cine-on');
-        stage.style.setProperty('--exit','0');
+        stage.style.setProperty('--p','0');
         ST.create({trigger:'.cine-track',start:'top top',end:'bottom bottom',scrub:.5,anticipatePin:1,
-          onUpdate:function(self){stage.style.setProperty('--exit',self.progress.toFixed(3));},
-          onRefresh:function(self){stage.style.setProperty('--exit',self.progress.toFixed(3));}});
-      }
+          onUpdate:function(self){stage.style.setProperty('--p',self.progress.toFixed(3));},
+          onRefresh:function(self){stage.style.setProperty('--p',self.progress.toFixed(3));}});
+        var igniteDelay=h.classList.contains('intro-on')?3000:500;
+        setTimeout(tesla,igniteDelay);
+      } else { document.querySelectorAll('.lab').forEach(function(l){l.classList.add('lit');}); }
 
       if(DESK){
-        var cg=document.querySelector('.cursor-glow'),clu=document.querySelector('.orbcluster');
+        var cg=document.querySelector('.cursor-glow'),clu=document.querySelector('.orbStage');
         if(cg)GS.to(cg,{opacity:1,duration:1.2,delay:.5});
         var gx=cg?GS.quickTo(cg,'x',{duration:.5,ease:'power3'}):null,gy=cg?GS.quickTo(cg,'y',{duration:.5,ease:'power3'}):null;
         var clx=clu?GS.quickTo(clu,'x',{duration:.9,ease:'power3'}):null,cly=clu?GS.quickTo(clu,'y',{duration:.9,ease:'power3'}):null;
