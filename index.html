@@ -321,6 +321,20 @@ html.cine-on .shint{display:inline-flex;align-items:center;gap:7px;position:abso
 .vault .th{aspect-ratio:16/10;border-radius:11px;border:1px solid var(--line);background:var(--paper);display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted);gap:3px;text-align:center;transition:transform .3s,box-shadow .3s}
 .vault .th:hover{transform:translateY(-3px) scale(1.02);box-shadow:var(--sh)}
 .vault .th .e{font-size:20px}
+/* premium book */
+.bookwrap{position:relative;display:grid;place-items:center;padding:6px}
+.book-img{width:100%;max-width:460px;display:block;position:relative;z-index:1;filter:drop-shadow(0 34px 46px rgba(14,27,51,.3))}
+@media(prefers-reduced-motion:no-preference){.book-img{animation:bookfloat 6.5s ease-in-out infinite}}
+@keyframes bookfloat{0%,100%{transform:translateY(-6px) rotate(-.5deg)}50%{transform:translateY(6px) rotate(.5deg)}}
+.book-glow{position:absolute;top:2%;left:52%;transform:translateX(-50%);width:54%;height:64%;z-index:0;
+  background:radial-gradient(circle,rgba(242,201,120,.65),rgba(242,193,78,.2) 45%,transparent 72%);filter:blur(7px)}
+@media(prefers-reduced-motion:no-preference){.book-glow{animation:pulse 4.5s ease-in-out infinite}}
+.spark{position:absolute;width:7px;height:7px;border-radius:50%;z-index:2;opacity:0;
+  background:radial-gradient(circle,#fff,rgba(242,201,120,.75) 55%,transparent 72%)}
+@media(prefers-reduced-motion:no-preference){.spark{animation:sparkrise 3.6s ease-in-out infinite}}
+.spark.s1{left:49%;bottom:50%;animation-delay:0s}.spark.s2{left:55%;bottom:48%;animation-delay:.9s}
+.spark.s3{left:51%;bottom:55%;animation-delay:1.8s}.spark.s4{left:58%;bottom:52%;animation-delay:2.7s}
+@keyframes sparkrise{0%{opacity:0;transform:translateY(0) scale(.5)}22%{opacity:1}100%{opacity:0;transform:translateY(-78px) scale(1.05)}}
 
 /* examples */
 .grid4{display:grid;gap:16px;margin-top:40px;grid-template-columns:1fr 1fr}
@@ -556,11 +570,10 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
             <li><span class="pi">🗺️</span><span><b>Sequential progress.</b> <span class="t">Follow the A1 → A2 → B1 roadmap step by step.</span></span></li>
           </ul>
         </div>
-        <div class="vault">
-          <div class="th"><span class="e">🎬</span>private video</div>
-          <div class="th"><span class="e">📄</span>PDF · A1</div>
-          <div class="th"><span class="e">🧩</span>worksheet</div>
-          <div class="th"><span class="e">🎬</span>review video</div>
+        <div class="bookwrap" aria-hidden="true">
+          <span class="book-glow"></span>
+          <img class="book-img" src="book.webp" alt="" loading="lazy" decoding="async">
+          <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span>
         </div>
       </div>
     </div>
