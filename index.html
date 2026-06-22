@@ -23,6 +23,7 @@
   --sh-lg:0 24px 50px -26px rgba(14,27,51,.32);
   --r:20px;
 }
+@property --beam{syntax:"<angle>";inherits:false;initial-value:0deg}
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
 body{font-family:var(--sans);color:var(--ink);background:var(--bg);overflow-x:hidden;line-height:1.62;font-size:17px;font-weight:400}
@@ -117,7 +118,8 @@ nav{max-width:1140px;margin:14px auto 0;display:flex;align-items:center;justify-
 html.cine-on .cine-track{height:255vh}
 @media(max-width:640px){html.cine-on .cine-track{height:215vh}}
 html.cine-on .stage{position:sticky;top:0;height:100vh;min-height:0}
-html.cine-on .stage-in{position:absolute;inset:0;display:block;min-height:0;padding:0;max-width:none}
+html.cine-on .stage-in{position:absolute;inset:0;display:block;min-height:0;padding:0;max-width:none;
+  transform:translateY(calc(-7vh*var(--exit,0)));opacity:calc(1 - .45*var(--exit,0))}
 
 /* watermark */
 .wmark{display:none;font-family:var(--disp);font-weight:800;letter-spacing:-.05em;line-height:1;
@@ -134,16 +136,28 @@ html.cine-on .orbit-field{display:block;position:absolute;inset:0;
 .orbit-rot{position:absolute;inset:0}
 @media(prefers-reduced-motion:no-preference){.orbit-rot{animation:wob 22s ease-in-out infinite alternate}}
 @keyframes wob{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
-.lab{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:6px;
-  white-space:nowrap;background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:999px;
-  padding:8px 14px;font-family:var(--disp);font-weight:600;font-size:clamp(10.5px,2.7vw,14px);
-  color:var(--ink);box-shadow:0 12px 28px -16px rgba(14,27,51,.4)}
+.lab{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:7px;
+  white-space:nowrap;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:999px;
+  padding:9px 15px;font-family:var(--disp);font-weight:700;font-size:clamp(11px,2.9vw,17px);
+  color:var(--ink);box-shadow:0 14px 30px -16px rgba(14,27,51,.45)}
 .lab b{color:var(--gold)}
-@media(prefers-reduced-motion:no-preference){.lab{animation:labfloat 7s ease-in-out infinite}.lab.b{animation-delay:-1.4s}.lab.c{animation-delay:-2.8s}.lab.d{animation-delay:-4.2s}.lab.e{animation-delay:-5.6s}.lab.f{animation-delay:-3.5s}}
+/* light-ribbon (border beam) around each chip */
+html.cine-on .lab::before{content:"";position:absolute;inset:-2.5px;border-radius:999px;padding:2.5px;pointer-events:none;z-index:2;
+  background:conic-gradient(from var(--beam,0deg),transparent 0 50%,rgba(242,201,120,.8) 64%,#fff 76%,var(--navy) 84%,rgba(242,201,120,.65) 92%,transparent 99%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  filter:drop-shadow(0 0 6px rgba(242,201,120,.8))}
+@media(prefers-reduced-motion:no-preference){
+  html.cine-on .lab::before{animation:beam 3s linear infinite}
+  .lab.b::before{animation-delay:-.7s}.lab.c::before{animation-delay:-1.4s}.lab.d::before{animation-delay:-2.1s}.lab.e::before{animation-delay:-2.8s}.lab.f::before{animation-delay:-1.05s}
+  html.cine-on.hero-go .lab{animation:labfloat 7s ease-in-out infinite,labin .85s ease both;animation-delay:0s,calc(.15s + var(--i,0)*.17s)}
+}
+html.cine-on:not(.hero-go) .lab{opacity:0}
+@keyframes beam{to{--beam:360deg}}
 @keyframes labfloat{0%,100%{transform:translate(-50%,calc(-50% - 5px))}50%{transform:translate(-50%,calc(-50% + 5px))}}
-.lab.a{left:23%;top:24%}.lab.b{left:77%;top:29%}.lab.c{left:17%;top:58%}
-.lab.d{left:79%;top:63%}.lab.e{left:31%;top:82%}.lab.f{left:68%;top:84%}
-@media(min-width:760px){.lab{padding:9px 16px}.lab.a{left:23%;top:23%}.lab.b{left:77%;top:27%}.lab.c{left:15%;top:57%}.lab.d{left:85%;top:61%}.lab.e{left:30%;top:83%}.lab.f{left:71%;top:84%}}
+@keyframes labin{0%{opacity:0;box-shadow:0 0 0 0 rgba(242,201,120,0)}55%{opacity:1;box-shadow:0 0 30px 3px rgba(242,201,120,.9)}100%{opacity:1;box-shadow:0 14px 30px -16px rgba(14,27,51,.45)}}
+.lab.a{left:22%;top:24%}.lab.b{left:78%;top:29%}.lab.c{left:16%;top:58%}
+.lab.d{left:80%;top:63%}.lab.e{left:31%;top:82%}.lab.f{left:69%;top:84%}
+@media(min-width:760px){.lab{padding:12px 22px;font-size:16.5px}.lab.a{left:22%;top:23%}.lab.b{left:78%;top:27%}.lab.c{left:14%;top:57%}.lab.d{left:86%;top:61%}.lab.e{left:29%;top:83%}.lab.f{left:72%;top:84%}}
 
 /* orb */
 .orbWrap{position:relative;display:grid;place-items:center}
@@ -158,6 +172,8 @@ html.cine-on .orb{width:min(48vmin,392px);animation:none;transform:scale(calc(.2
 @keyframes pulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.07)}}
 .orb-disc{position:absolute;inset:0}
 .orb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+@media(prefers-reduced-motion:no-preference){.orb-img{animation:orbspin 24s linear infinite}}
+@keyframes orbspin{to{transform:rotate(360deg)}}
 .orb-shine{position:absolute;inset:15%;border-radius:50%;pointer-events:none;mix-blend-mode:screen;opacity:.45;
   background:conic-gradient(from 0deg,transparent 0deg,rgba(255,238,200,.55) 40deg,transparent 90deg,transparent 360deg)}
 @media(prefers-reduced-motion:no-preference){.orb-shine{animation:spin 9s linear infinite}}
@@ -403,12 +419,12 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
           <div class="wmark" aria-hidden="true">Genau</div>
 
           <div class="orbit-field" aria-hidden="true"><div class="orbit-rot">
-            <span class="lab a">🎁 First lesson <b>free</b></span>
-            <span class="lab b">Zero to <b>B1</b></span>
-            <span class="lab c"><b>4.5</b> months</span>
-            <span class="lab d">A1 → A2 → B1</span>
-            <span class="lab e">1-on-1 + small group</span>
-            <span class="lab f">★ Premium · library+videos</span>
+            <span class="lab a" style="--i:0">🎁 First lesson <b>free</b></span>
+            <span class="lab b" style="--i:1">Zero to <b>B1</b></span>
+            <span class="lab c" style="--i:2"><b>4.5</b> months</span>
+            <span class="lab d" style="--i:3">A1 → A2 → B1</span>
+            <span class="lab e" style="--i:4">1-on-1 + small group</span>
+            <span class="lab f" style="--i:5">★ Premium · library+videos</span>
           </div></div>
 
           <div class="orbWrap" aria-hidden="true"><div class="orb">
@@ -630,16 +646,18 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // intro / ignition title sequence (autoplay once per session, skippable, non-blocking)
+  var heroGo=function(){h.classList.add('hero-go');};
   var seen=false; try{seen=sessionStorage.getItem('genauIntro')==='1';}catch(e){}
   if(!reduce && !seen){
     try{sessionStorage.setItem('genauIntro','1');}catch(e){}
     h.classList.add('intro-on');
     var skipped=false;
-    var introEnd=function(){if(skipped)return;skipped=true;clearTimeout(it);h.classList.add('intro-done');
+    var introEnd=function(){if(skipped)return;skipped=true;clearTimeout(it);h.classList.add('intro-done');heroGo();
       setTimeout(function(){var el=document.querySelector('.intro');if(el)el.style.display='none';h.classList.remove('intro-on');},900);};
     var it=setTimeout(introEnd,2850);
     ['wheel','touchstart','pointerdown','keydown'].forEach(function(ev){addEventListener(ev,function o(){introEnd();removeEventListener(ev,o);},{passive:true});});
-  }
+    setTimeout(heroGo,4200);
+  } else { heroGo(); }
 
   var rv=document.querySelectorAll('.rv, .jrow');
   if(!('IntersectionObserver' in window)){rv.forEach(function(e){e.classList.add('in')});}
@@ -685,6 +703,7 @@ html.js .rv.in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.22,
       stage.style.setProperty('--orb',(1-seg(p,.42,.8)).toFixed(3));
       stage.style.setProperty('--word',seg(p,.5,.86).toFixed(3));
       stage.style.setProperty('--copy',seg(p,.8,1).toFixed(3));
+      stage.style.setProperty('--exit',seg(p,.9,1).toFixed(3));
     }
     function onS(){if(!ticking){ticking=true;requestAnimationFrame(frame);}}
     addEventListener('scroll',onS,{passive:true});
